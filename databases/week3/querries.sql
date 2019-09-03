@@ -55,7 +55,7 @@ delete from review where id = 3;
 select * from meal where price < 90;
 
 -- Get meals that still has available reservations
-select distinct * from meal
+select distinct meal.id, meal.title, meal.max_reservations, reservation.number_of_guests from meal
 inner join reservation on meal.id = reservation.meal_id
 where meal.max_reservations > reservation.number_of_guests;
 
@@ -81,7 +81,12 @@ where meal.title = 'Pizza'
 order by reservation.created_date;
 
 -- Sort all meals by average number of stars in the reviews
-select meal.title, avg(review.stars) from meal
+select distinct meal.title, avg(review.stars) from meal
 left join review on meal.id = review.meal_id
 group by meal.title
 order by avg(review.stars) desc;
+
+describe meal;
+
+select json_object('id', id, 'title', title, 'max_reservations', max_reservations, 'description', description, 'created_date', created_date) 
+into outfile 'C:\Users\Lillus\Documents\github-hyf-homework\homework-hyf\nodejs\week1\meal-sharing-project\src\backend\data\exportedMeals.json' from meal; 
