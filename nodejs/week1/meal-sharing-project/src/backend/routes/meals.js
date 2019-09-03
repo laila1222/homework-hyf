@@ -8,8 +8,9 @@ const rawDataMeals = fs.readFileSync (
   'utf8'
 );
 const meals = JSON.parse (rawDataMeals);
-
 // console.log(meals);
+
+
 
 router.get ('/', function (req, res) {
   res.json (meals);
