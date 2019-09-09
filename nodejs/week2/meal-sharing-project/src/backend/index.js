@@ -11,15 +11,13 @@ const randomMealRouter = require ('./routes/randomMeal.js');
 const randomReservationRouter = require ('./routes/randomReserv.js');
 
 app.use ('/meals', mealsRouter);
-app.get ('/reservations', reservationRouter);
-app.get ('/cheapmeals', cheapMealsRouter);
-app.get ('/largemeals', largeMealsRouter);
-app.get ('/meal', randomMealRouter);
-app.get ('/reservation', randomReservationRouter);
-
-// New routes
+app.use ('/reservations', reservationRouter);
+app.use ('/cheapmeals', cheapMealsRouter);
+app.use ('/largemeals', largeMealsRouter);
+app.use ('/meal', randomMealRouter);
+app.use ('/reservation', randomReservationRouter);
 
 // Server
-const server = app.listen (3001, function () {
-  console.log ('The app is listening at 3001');
+const server = app.listen (3000, function () {
+  console.log ('The app is listening at 3000');
 });
