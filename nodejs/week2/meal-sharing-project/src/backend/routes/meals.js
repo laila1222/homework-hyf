@@ -38,41 +38,77 @@ router.get ('/:id', (req, res) => {
   res.send (response);
 });
 
+// Functions
+const filterByPrice = (allMeals, maxPrice) => {
+  if (!maxPrice) {
+    return allMeals;
+  }
+  return meals.filter (meal => meal.price <= maxPrice);
+  
+}
+
+function checkTitle (title, meals) {
+  if (!title) {
+    return meals;
+}
+  return  meals.filter (
+    meal => meal.title.toLowerCase ().includes(title)
+  );
+}
+
+function checkCreatedAfter (createdAfterDate, meals) {
+  if (!createdAfterDate) {
+    return meals;
+  } else {
+    return meals.filter (
+      meal => meal.createdAtDateFormat.getTime () > createdAfterDate.getTime ()
+    );
+  }
+}
+
+
+
+function limitResults (limit, meals) {
+  if (!limit) {
+    return meals;
+  } else {
+    return meals.slice(0, limit);
+  }
+}
+
+
 router.get ('/', function (req, res) {
   // Max price
   const maxPriceString = req.query.maxPrice;
   const maxPrice = Number(maxPriceString);
-  console.log(typeof(maxPrice));
+
   // Title
   const rawTitle = req.query.title;
   // const title = rawTitle.replace(/"/g, "").toLowerCase().trim();
-  const title = rawTitle.toLowerCase ().trim ();
+  const title = rawTitle && rawTitle.toLowerCase ().trim ();
 
   // Created after
   const createdAfterDateString = req.query.createdAfter;
-  const createdAfterDate = new Date (createdAfterDateString + 'Z');
-  console.log(createdAfterDateString);
+  const createdAfterDate = createdAfterDateString && new Date (createdAfterDateString + 'Z');
 
   // Limit number of meals displayed
-  const limitInString = req.query.limit;
-  const limitInNumber = Number (limitInString);
+  const limitString = req.query.limit;
+  const limitNumber = limitString && Number (limitString);
+  console.log(limitNumber)
+
+  // Filter with functions
+  const priceFiltered = filterByPrice(meals, maxPrice);
+  const titleFiltered = checkTitle(title, priceFiltered);
+  const dateFiltered = checkCreatedAfter(createdAfterDate, titleFiltered);
+  const limitNumberOfResults = limitResults(limitNumber, dateFiltered);
 
 
-  // filter with functions
-  const priceFiltered = checkMaxPrice (maxPrice);
-  const titleFiltered = checkTitle (title, priceFiltered);
-  const dateFiltered = checkCreatedAfter (createdAfterDate, titleFiltered);
-  // console.log(dateFiltered);
-  // console.log(dateFiltered.length);
-  
-
-  res.json (dateFiltered);
+  res.json(limitNumberOfResults);
 });
 
 module.exports = router;
 
 // Add reviews to meals
-// console.log(meals);
 
 // Read and parse reviews.json file
 const rawDataReviews = fs.readFileSync (
@@ -80,7 +116,6 @@ const rawDataReviews = fs.readFileSync (
   'utf8'
 );
 const reviews = JSON.parse (rawDataReviews);
-// console.log(reviews);
 
 // Give reviews to the right meals according to meal_id
 meals.forEach (meal => {
@@ -92,124 +127,15 @@ meals.forEach (meal => {
   }
 });
 
-// Fucntions
-function checkMaxPrice (maxPrice) {
-  if (maxPrice) {
-    const matchingMeals = meals.filter (meal => meal.price <= maxPrice);
-    if (matchingMeals.length < 1) {
-      return 'The maximum price is too low. We do not have so cheap meals.';
-    } else {
-      return matchingMeals;
-    }
-  } else {
-    return meals;
-  }
-}
+// Functions
 
 function checkTitle (title, filteredByPriceObj) {
-  if (title) {
-    const matchingMeals = filteredByPriceObj.filter (
-      meal => meal.title.toLowerCase ().includes(title)
-    );
-    if (matchingMeals.length < 1) {
-      return 'There is no meal with this title';
-    } else {
-      return matchingMeals;
-    }
-  } else {
-    return filteredByPriceArr;
-  }
+  if (!title) {
+    return filteredByPriceObj;
 }
-
-function checkCreatedAfter (createdAfterDate, filteredByPriceAndTitleObj) {
-  
-  
-  if (createdAfterDate) {
-    const matchingMeals = filteredByPriceAndTitleObj.filter (
-      meal => meal.createdAtDateFormat.getTime () > createdAfterDate.getTime ()
-    );
-    if (matchingMeals.length < 1) {
-      return 'There is no meal after your date.';
-    } else {
-      return matchingMeals;
-    }
-  } else {
-    return filteredByPriceAndTitleArr;
-  }
+  return  filteredByPriceObj.filter (
+    meal => meal.title.toLowerCase ().includes(title)
+  );
 }
 
 
-const refreshSearchResults = () => {
-  let filteredResults = 
-}
-
-// const filterByPrice = (allMeals, maxPrice) => {
-//   if (!maxPrice) {
-//     return allMeals;
-//   }
-//   return meals.filter (meal => meal.price <= maxPrice);
-// }
-// function addLimit (limitInNumber, filteredByPriceTitleDateArr) {
-
-// }
-
-// console.log(meals)
-
-// just in case I need it
-// Max Price
-// const maxPrice = req.query.maxPrice;
-// let resultFromPriceFilter;
-// if (maxPrice) {
-//   const matchingMeals = meals.filter(meal => meal.price < maxPrice);
-//   if (matchingMeals.length < 1) {
-//     resultFromPriceFilter = 'There is no meals with these filters';
-//   } else {
-//     resultFromPriceFilter = matchingMeals;
-//   }
-
-// } else {
-//   resultFromPriceFilter = meals;
-// }
-
-// // Title
-// // const rawTitle = req.query.title;
-// // const title = rawTitle.replace(/"/g, "").toLowerCase().trim();
-// // let resultFromTitleFilter;
-// // console.log(title);
-
-// // if (title) {
-// //   const matchingMeals = meals.filter(meal => meal.title.toLowerCase() === title);
-// //   if(matchingMeals.length < 1) {
-// //     resultFromTitleFilter = 'There is no meal with this title';
-// //   } else {
-// //     resultFromTitleFilter = matchingMeals;
-// //   }
-// // } else {
-// //   resultFromTitleFilter = meals;
-// // }
-
-// // Created after
-// // const createdAfterDateString = req.query.createdAfter;
-// // const createdAfterDate = new Date(createdAfterDateString + 'Z');
-// // let resultFromDateFilter;
-
-// // if(createdAfterDate) {
-// //   const matchingMeals = meals.filter(meal => meal.createdAtDateFormat.getTime() > createdAfterDate.getTime() );
-// //   if (matchingMeals.length < 1) {
-// //     resultFromDateFilter = 'There is no meal after your date.'
-// //   } else {
-// //     resultFromDateFilter = matchingMeals;
-// //   }
-// // } else {
-// //   resultFromDateFilter = meals;
-// // }
-
-// // Limit number of meals displayed
-// const limitInString = req.query.limit;
-// const limitInNumber = Number (limitInString);
-// // console.log(limit);
-// // console.log(typeof(limitInNumber));
-// const displayMeals = meals;
-// if (displayMeals.length > 4) {
-
-// }
