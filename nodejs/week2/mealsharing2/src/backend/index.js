@@ -12,8 +12,11 @@ const cheapMealsRouter = require ('./routes/cheapMeals.js');
 const largeMealsRouter = require ('./routes/largeMeals.js');
 const randomMealRouter = require ('./routes/randomMeal.js');
 const randomReservationRouter = require ('./routes/randomReserv.js');
-const reviewsRouter = require('./routes/reviews.js');
 
+// Homework - week 2
+const reviewsRouter = require ('./routes/reviews.js');
+const mealsIdRouter = require ('./routes/meals-id.js');
+const reservationsIdRouter = require ('./routes/reservations-id.js');
 
 
 // Homework - week 2
@@ -31,8 +34,11 @@ app.use ('/cheapmeals', cheapMealsRouter);
 app.use ('/largemeals', largeMealsRouter);
 app.use ('/meal', randomMealRouter);
 app.use ('/reservation', randomReservationRouter);
-app.use('/reviews', reviewsRouter);
 
+// Homework - week 2
+app.use ('/meals/:id', mealsIdRouter);
+app.use ('/reservations/:id', reservationsIdRouter);
+app.use ('/reviews', reviewsRouter);  
 
 // Error handling
 app.use ((err, req, res, next) => {
@@ -41,6 +47,6 @@ app.use ((err, req, res, next) => {
 });
 
 // Server
-const server = app.listen (3013, function () {
-  console.log ('The app is listening at 3013');
+const server = app.listen (3014, function () {
+  console.log ('The app is listening at 3014');
 });

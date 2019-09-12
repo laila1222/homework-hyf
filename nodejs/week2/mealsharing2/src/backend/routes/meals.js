@@ -8,58 +8,18 @@ const rawDataMeals = fs.readFileSync (
   'utf8'
 );
 const meals = JSON.parse (rawDataMeals);
+// console.log(meals);
 
 // Convert datestrings in meals.json to date format
+
 meals.forEach (meal => {
   meal.createdAtDateFormat = new Date (meal.createdAt + 'Z');
 });
 
+// router.get ('/', function (req, res) {
+//   res.json (meals);
+// });
 
-
-
-// Functions
-const filterByPrice = (allMeals, maxPrice) => {
-  if (!maxPrice) {
-    return allMeals;
-  }
-  return meals.filter (meal => meal.price <= maxPrice);
-  
-}
-
-function filterByTitle (title, meals) {
-  if (!title) {
-    return meals;
-}
-  return  meals.filter (
-    meal => meal.title.toLowerCase ().includes(title)
-  );
-}
-
-function filterByDate (createdAfterDate, meals) {
-  if (!createdAfterDate) {
-    return meals;
-  } else {
-    return meals.filter (
-      meal => meal.createdAtDateFormat.getTime () > createdAfterDate.getTime ()
-    );
-  }
-}
-
-function limitResults (limit, meals) {
-  if (!limit) {
-    return meals;
-  } else {
-    return meals.slice(0, limit);
-  }
-}
-  
-// Requests
-// Get all meals
-router.get ('/', function (req, res) {
-  res.json (meals);
-});
-
-// Get meal by ID
 router.get ('/:id', (req, res) => {
   const id = req.params.id;
   const idNumber = Number (id);
@@ -78,7 +38,45 @@ router.get ('/:id', (req, res) => {
   res.send (response);
 });
 
-// Get meals filtered by given parameters
+// Functions
+const filterByPrice = (allMeals, maxPrice) => {
+  if (!maxPrice) {
+    return allMeals;
+  }
+  return meals.filter (meal => meal.price <= maxPrice);
+  
+}
+
+function checkTitle (title, meals) {
+  if (!title) {
+    return meals;
+}
+  return  meals.filter (
+    meal => meal.title.toLowerCase ().includes(title)
+  );
+}
+
+function checkCreatedAfter (createdAfterDate, meals) {
+  if (!createdAfterDate) {
+    return meals;
+  } else {
+    return meals.filter (
+      meal => meal.createdAtDateFormat.getTime () > createdAfterDate.getTime ()
+    );
+  }
+}
+
+
+
+function limitResults (limit, meals) {
+  if (!limit) {
+    return meals;
+  } else {
+    return meals.slice(0, limit);
+  }
+}
+
+
 router.get ('/', function (req, res) {
   // Max price
   const maxPriceString = req.query.maxPrice;
@@ -96,12 +94,12 @@ router.get ('/', function (req, res) {
   // Limit number of meals displayed
   const limitString = req.query.limit;
   const limitNumber = limitString && Number (limitString);
-  console.log(limitNumber);
+  console.log(limitNumber)
 
   // Filter with functions
   const priceFiltered = filterByPrice(meals, maxPrice);
-  const titleFiltered = filterByTitle(title, priceFiltered);
-  const dateFiltered = filterByDate(createdAfterDate, titleFiltered);
+  const titleFiltered = checkTitle(title, priceFiltered);
+  const dateFiltered = checkCreatedAfter(createdAfterDate, titleFiltered);
   const limitNumberOfResults = limitResults(limitNumber, dateFiltered);
 
 
@@ -111,6 +109,7 @@ router.get ('/', function (req, res) {
 module.exports = router;
 
 // Add reviews to meals
+
 // Read and parse reviews.json file
 const rawDataReviews = fs.readFileSync (
   __dirname + '/../data/reviews.json',
@@ -128,4 +127,14 @@ meals.forEach (meal => {
   }
 });
 
+// Functions
+
+function checkTitle (title, filteredByPriceObj) {
+  if (!title) {
+    return filteredByPriceObj;
+}
+  return  filteredByPriceObj.filter (
+    meal => meal.title.toLowerCase ().includes(title)
+  );
+}
 
