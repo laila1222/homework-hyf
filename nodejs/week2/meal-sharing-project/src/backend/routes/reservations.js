@@ -3,17 +3,13 @@ const router = express.Router ();
 const fs = require ('fs');
 
 // //Read and parse reservations.json file
-let rawDataReservations = fs.readFileSync (
-  __dirname + '/../data/reservation.json',
-  'utf8'
-);
+let rawDataReservations = fs.readFileSync (__dirname + '/../data/reservation.json',  'utf8');
 let reservations = JSON.parse (rawDataReservations);
 
 // // Respond with the json for all reservations
 router.get ('/', (req, res) => {
   res.json (reservations);
 });
-
 
 router.get('/:id', (req, res) => {
   const id = req.params.id;
@@ -28,7 +24,6 @@ router.get('/:id', (req, res) => {
     response = matchingRes;
   }
   res.send(response);
-
 })
 
 module.exports = router;

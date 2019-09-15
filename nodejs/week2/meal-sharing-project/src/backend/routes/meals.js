@@ -3,10 +3,7 @@ const router = express.Router ();
 const fs = require ('fs');
 
 // Read and parse meals.json file
-const rawDataMeals = fs.readFileSync (
-  __dirname + '/../data/meals.json',
-  'utf8'
-);
+const rawDataMeals = fs.readFileSync (__dirname + '/../data/meals.json', 'utf8');
 const meals = JSON.parse (rawDataMeals);
 
 // Convert datestrings in meals.json to date format
@@ -14,16 +11,12 @@ meals.forEach (meal => {
   meal.createdAtDateFormat = new Date (meal.createdAt + 'Z');
 });
 
-
-
-
 // Functions
 const filterByPrice = (allMeals, maxPrice) => {
   if (!maxPrice) {
     return allMeals;
   }
-  return meals.filter (meal => meal.price <= maxPrice);
-  
+  return meals.filter (meal => meal.price <= maxPrice); 
 }
 
 function filterByTitle (title, meals) {
@@ -104,7 +97,6 @@ router.get ('/', function (req, res) {
   const dateFiltered = filterByDate(createdAfterDate, titleFiltered);
   const limitNumberOfResults = limitResults(limitNumber, dateFiltered);
 
-
   res.json(limitNumberOfResults);
 });
 
@@ -112,10 +104,7 @@ module.exports = router;
 
 // Add reviews to meals
 // Read and parse reviews.json file
-const rawDataReviews = fs.readFileSync (
-  __dirname + '/../data/reviews.json',
-  'utf8'
-);
+const rawDataReviews = fs.readFileSync (__dirname + '/../data/reviews.json', 'utf8');
 const reviews = JSON.parse (rawDataReviews);
 
 // Give reviews to the right meals according to meal_id

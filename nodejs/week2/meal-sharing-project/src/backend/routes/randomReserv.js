@@ -3,10 +3,7 @@ const router = express.Router ();
 const fs = require ('fs');
 
 // //Read and parse reservations.json file
-let rawDataReservations = fs.readFileSync (
-  __dirname + '/../data/reservation.json',
-  'utf8'
-);
+let rawDataReservations = fs.readFileSync (__dirname + '/../data/reservation.json',  'utf8');
 let reservations = JSON.parse (rawDataReservations);
 
 // // Respond with the json for a random reservation

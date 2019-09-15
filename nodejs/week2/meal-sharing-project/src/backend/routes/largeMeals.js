@@ -3,10 +3,7 @@ const router = express.Router ();
 const fs = require ('fs');
 
 // Read and parse meals.json file
-const rawDataMeals = fs.readFileSync (
-  __dirname + '/../data/meals.json',
-  'utf8'
-);
+const rawDataMeals = fs.readFileSync (__dirname + '/../data/meals.json',  'utf8');
 const meals = JSON.parse (rawDataMeals);
 
 // // Respond with the json for all the meals that can fit lots of people
