@@ -106,7 +106,7 @@ router.get ('/', function (req, res) {
   res.json(limitNumberOfResults);
 });
 
-module.exports = router;
+
 
 // Add reviews to meals
 
@@ -138,3 +138,4 @@ function checkTitle (title, filteredByPriceObj) {
   );
 }
 
+module.exports = router;

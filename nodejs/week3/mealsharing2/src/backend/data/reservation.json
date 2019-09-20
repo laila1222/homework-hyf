@@ -1,0 +1,42 @@
+[
+    {
+      "name": "Benjamin Hughes",
+      "email": "benjamin@hughes.dk",
+      "mealId": 1
+    },
+    {
+        "name": "Lilla Kor",
+        "email": "lili@hkora.dk",
+        "mealId": 2
+      },
+      {
+        "name": "Anders Andersen",
+        "email": "andy@hul.dk",
+        "mealId": 3
+      },
+      {
+        "name": "Kate Middle",
+        "email": "kate@not.dk",
+        "mealId": 4
+      },
+      {
+        "name": "Betty Berkinson",
+        "email": "betty@bebe.dk",
+        "mealId": 5
+      },
+      {
+        "name": "Anna Hampton",
+        "email": "anna@hug.dk",
+        "mealId": 6
+      },
+      {
+        "name": "Mila Hampton",
+        "email": "mila@hug.dk",
+        "mealId": 6
+      },
+      {
+        "name": "Berci Tira",
+        "email": "beri@hug.dk",
+        "mealId": 1
+      }
+  ]
