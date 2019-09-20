@@ -18,14 +18,11 @@ let reservations = JSON.parse (rawDataReservations);
 
 // // Respond with the json for a random meal.
 const randomMeal = meals[Math.floor (Math.random () * meals.length)];
-// console.log(randomMeal);
 
 // // Check if meal has reservations -> go through reservations array, check if any matches with idofrandommeal
 const mealHasReservation = reservations.filter (
   res => res.mealId === randomMeal.id
 );
-// console.log(mealHasReservation);
-const mealHasReservationName = mealHasReservation.name;
 
 function addEmailToMeal (mealHasReservation, randomMeal) {
   // Check if there's any reservations, if yes -> collect emails in array, and add it to the random meal object
@@ -43,6 +40,7 @@ function addEmailToMeal (mealHasReservation, randomMeal) {
 }
 
 const loadRandomMealWithEmail = addEmailToMeal (mealHasReservation, randomMeal);
+console.log(loadRandomMealWithEmail);
 
 router.get ('/', (req, res) => {
   res.send (loadRandomMealWithEmail);
