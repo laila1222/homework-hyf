@@ -54,7 +54,6 @@ router.get ('/:id', (req, res) => {
 // Update reservation by id
 router.put ('/:id', (req, res) => {
   const id = req.params.id;
-  console.log (req.body);
   pool.query (
     'update reservation set number_of_guests = ?, created_date = ? where id = ?;',
     [req.body.number_of_guests, req.body.created_date, id],

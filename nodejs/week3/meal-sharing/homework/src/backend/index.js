@@ -1,14 +1,15 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 
 // Routers
-const mealsRouter = require("./api/meals");
+const mealsRouter = require('./api/meals');
 const reservationsRouter = require('./api/reservations.js');
+const reviewsRouter = require('./api/reviews.js');
 const router = express.Router();
 
 const port = process.env.PORT || 5000;
 // For week4 no need to look into this!
-/* const path = require("path"); */
+/* const path = require('path'); */
 /* // Serve the built client html
 const buildPath = path.join(__dirname, "../../dist");
 app.use(express.static(buildPath)); */
@@ -19,15 +20,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // If path= meals, use mealsRouter
-router.use("/meals", mealsRouter);
+router.use('/meals', mealsRouter);
 router.use('/reservations', reservationsRouter);
+router.use('/reviews', reviewsRouter);
 
 
 
 
 
 // path 'api' uses express router
-app.use("/api", router);
+app.use('/api', router);
 
 // For week4 no need to look into this!
 /* // Ensures that the client router works on reload aswell.
