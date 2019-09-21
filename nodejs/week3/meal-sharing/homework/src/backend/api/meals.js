@@ -6,6 +6,8 @@ const bodyParser = require ('body-parser');
 router.use (bodyParser.urlencoded ({extended: false}));
 router.use (bodyParser.json ());
 
+
+// I am still trying to fix this part, in order to be able to use more queries at the same time
 router.get ('/', (req, res) => {
   // const availableReservations = req.query.availableReservations;
   // if (availableReservations) {
