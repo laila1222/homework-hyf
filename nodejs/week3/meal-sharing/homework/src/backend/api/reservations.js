@@ -7,27 +7,13 @@ router.use (bodyParser.json ());
 
 // Get all reservations
 router.get ('/', (req, res) => {
-  const date = req.query.createdAfter;
-  const dateInDateFormat = new Date (date + 'Z');
-  console.log(typeof(date));
-  console.log(dateInDateFormat, typeof(dateInDateFormat));
-  
-  if (date) {
-    pool.query('select * from reservation where created_date > ? ;', dateInDateFormat, (err, results, fields) => {
-      if (err) {
-        console.error (err);
-      } else {
-        res.send (results);
-      }
-    })
-  }
-  // pool.query ('select * from reservation;', (err, results, fields) => {
-  //   if (err) {
-  //     console.error (err);
-  //   } else {
-  //     res.send (results);
-  //   }
-  // });
+  pool.query ('select * from reservation;', (err, results, fields) => {
+    if (err) {
+      console.error (err);
+    } else {
+      res.send (results);
+    }
+  });
 });
 
 // Post new reservation
