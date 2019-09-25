@@ -2,14 +2,12 @@ const express = require ('express');
 const router = express.Router ();
 const pool = require ('./../database');
 const bodyParser = require ('body-parser');
-const url = require('url');
 
 router.use (bodyParser.json ());
 
-// I am still trying to fix this part, in order to be able to use more queries at the same time
 router.get ('/', (req, res) => {
-  const availableReservations = req.query.availableReservations;
-  const maxPrice = Number(req.query.maxPrice);
+  // const availableReservations = req.query.availableReservations;
+  const maxPrice = Number (req.query.maxPrice);
 
   const rawTitle = req.query.title;
   const title = rawTitle && `%${rawTitle}%`;
@@ -17,67 +15,51 @@ router.get ('/', (req, res) => {
   const rawDate = req.query.createdAfter;
   const date = rawDate && new Date (rawDate + 'Z');
 
-  const limit = Number(req.query.limit);
+  const rawLimit = req.query.limit;
+  const limit = rawLimit && Number (rawLimit);
 
-  // Available reservations
-  if (availableReservations) {
-    pool.query('select distinct * from meal inner join reservation on meal.id = reservation.meal_id where meal.max_reservations > reservation.number_of_guests;',(err, results, fields) => {
-      if (err) {
-        console.error(err);
-      } else {
-        res.send(results);
-      }
-    })
+  // Build query according to queries from url
+  function getQuery () {
+    // If conditions exist, push them into the conditions array
+    const conditions = [];
+    let query = `select * from meal `;
+    if (maxPrice) {
+      const maxPriceQuery = ` price < ${maxPrice}`;
+      console.log (maxPriceQuery);
+      conditions.push (maxPriceQuery);
+    }
+    if (title) {
+      const titleQuery = ` title like '${title}'`;
+      conditions.push (titleQuery);
+    }
+    if (date) {
+      const dateQuery = `created_date > ${date}`;
+      conditions.push (dateQuery);
+    }
 
-  } else if (maxPrice) {
-    // Sort by maxPrice
-    pool.query("select * from meal where price <= ?;", maxPrice, (error, results, fields) => {
-      if (error) {
-        console.error(error);
-      } else {
-        res.send(results);
-      }
-      });
+    // Modify queries according to array length
+    if (conditions.length === 1) {
+      query += ' where' + conditions[0];
+    }
+    if (conditions.length > 1) {
+      query += 'where' + conditions.join (' and ');
+    }
 
-  }  else if (date) {
-    // Meal created after a specific date
-    pool.query('select * from meal where created_date > ?;', date, (err, results, fields) => {
-      if (err) {
-        console.error(err);
-      } else {
-        res.send(results);
-      }
-    });
-    
-  } else if (title) {
-    // Sort by title
-    pool.query( 'select * from meal where title like ?;', title, (err, results, fields) => {
-      if (err) {
-        console.error(err);
-      } else {
-        res.send(results);
-      }
-    });
+    if (limit) {
+      const limitQuery = ` limit ${limit}`;
+      query += limitQuery;
+    }
 
-  }  else if (limit) {
-    // Limit
-    pool.query('select * from meal limit ?;', limit, (err, results, fields) => {
-      if (err) {
-        console.error(err);
-      } else {
-        res.send(results);
-      }
-    });
-
-  } else {
-    pool.query('select * from meal;', (err, results, fields) => {
-      if (err) {
-        console.error(err);
-      } else {
-        res.send(results);
-      }
-    });
+    return `${query};`;
   }
+
+  pool.query (getQuery (), '', (err, results, fields) => {
+    if (err) {
+      console.error (err);
+    } else {
+      res.send (results);
+    }
+  });
 });
 
 // Post new meal
@@ -166,3 +148,10 @@ router.get ('/', (req, res) => {
 });
 
 module.exports = router;
+
+  // const returnAvailableReserv = (availableReservations) => {
+  //   if (availableReservations === true) {
+  //     const availableReservQuery = `inner join reservation on meal.id = reservation.meal_id where meal.max_reservations > reservation.number_of_guests;`
+  //     return availableReservQuery;
+  //   }
+  // };
