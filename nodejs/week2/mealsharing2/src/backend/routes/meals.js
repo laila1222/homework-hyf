@@ -8,10 +8,8 @@ const rawDataMeals = fs.readFileSync (
   'utf8'
 );
 const meals = JSON.parse (rawDataMeals);
-// console.log(meals);
 
 // Convert datestrings in meals.json to date format
-
 meals.forEach (meal => {
   meal.createdAtDateFormat = new Date (meal.createdAt + 'Z');
 });
