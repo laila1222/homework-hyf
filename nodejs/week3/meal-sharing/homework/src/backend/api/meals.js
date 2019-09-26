@@ -65,6 +65,7 @@ router.get ('/', (req, res) => {
 // Post new meal
 router.post ('/add-meal', (req, res) => {
   const meal = req.body;
+  console.log(meal);
   pool.query ('insert into meal set ?;', meal, (err, result, query) => {
     if (err) {
       console.error ('this is the error', err);
