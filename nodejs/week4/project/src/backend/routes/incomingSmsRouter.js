@@ -1,3 +1,4 @@
+// Variables
 const express = require ('express');
 const router = express.Router ();
 const dotenv = require ('dotenv').config ();
@@ -20,30 +21,22 @@ router.use (bodyParser.json ());
 router.use (bodyParser.urlencoded ({extended: false}));
 
 // Send sms
-// client.messages
-// .create({
-//    body: 'Hello lilla. I am from server',
-//    // number bought from twilio
-//    from: twilioNumber,
-//    // your number
-//    to: myNumber
-//  })
-// .then(message => console.log(message.body));
+client.messages
+.create({
+   body: 'Hello lilla. I am from server',
+   // number bought from twilio
+   from: myNumber,
+   // your number
+   to: twilioNumber
+ })
+.then(message => console.log(message.body));
 
 function sendResponse (res, message) {
-  // Get message from phone
-  // const responseMessage = req.body.Body.toLowerCase().split(' ');
-  // console.log(responseMessage);
-  // const twiml = new MessagingResponse();
+  const twiml = new MessagingResponse();
 
-  // checkRequestMsg(responseMessage);
-  // console.log(responseMessage);
-
-  // console.log('message is', message);
-  // twiml.message('hello  its lilla');
-  // res.writeHead(200, {'Content-Type': 'text/xml'});
-  // res.end(twiml.toString());
-  res.send (message);
+  twiml.message(message);
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
 }
 
 function formatDates (date) {
@@ -87,10 +80,25 @@ function checkFoodType (res, foodType) {
       res.status (400);
       next (err);
     }
-  } else {
-    message = `We do not sell ${foodType}`;
-    sendResponse (res, message);
-  }
+  } else if (!message) {
+          message = 'Please enter a valid foodtype from our menu.';
+          sendResponse(res, message);      
+  } 
+};
+
+function sendStatus (res, id) {
+    console.log(id);
+    pool.query ('select * from orders where id = ?', id, (err, results, fields) => {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log(results);
+            message = `The status of your order is: ${results[0].status}. Last updated: ${results[0].modified}`;
+            sendResponse(res, message);
+        }
+        
+    }
+    )
 }
 
 function checkRequestMsg (res, responseMessage) {
@@ -105,20 +113,24 @@ function checkRequestMsg (res, responseMessage) {
   } else if (responseMessage[0] === 'order') {
     const foodType = responseMessage[1];
     checkFoodType (res, foodType);
+  } else if (responseMessage[0] === 'status') {
+      const id = responseMessage[1];
+    sendStatus(res, id);
+
   } else {
     message = 'invalid message';
     sendResponse (res, message);
   }
 }
 
+
+
 router.post ('/', (req, res) => {
   let message;
-  // Get message from postman/browser
-  const msgFromPostMan = req.body.message.toLowerCase ().split (' ');
-  console.log (msgFromPostMan);
-
-  message = checkRequestMsg (res, msgFromPostMan);
-  console.log ('final call', message);
+  console.log(req.body);
+  const requestMessage = req.body.Body.toLowerCase().split(' ');
+  console.log(requestMessage);
+  message = checkRequestMsg (res, requestMessage);
 });
 
 // router.post('/', (req, res) => {
