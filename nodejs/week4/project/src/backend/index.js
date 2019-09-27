@@ -12,14 +12,12 @@ const subdomain = {subdomain: process.env.subdomain};
 // Routers
 const checkRouter = require('./routes/checkRouter.js');
 const incomingSmsRouter = require('./routes/incomingSmsRouter.js');
-
+const kitchenRouter = require('./routes/kitchenRouter.js');
 
 // Paths and routers to use
 app.use('/check', checkRouter);
 app.use('/incoming-sms', incomingSmsRouter);
-app.get('/', (req, res) => {
-  console.log('hello');
-})
+app.use('/kitchen', kitchenRouter);
 
 
 // Error handler
