@@ -31,9 +31,9 @@ client.messages
  })
 .then(message => console.log(message.body));
 
+//  --- Functions ---
 function sendResponse (res, message) {
   const twiml = new MessagingResponse();
-
   twiml.message(message);
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
@@ -44,10 +44,6 @@ function formatDates (date) {
   const month = date.getMonth () + 1;
   const year = date.getFullYear ();
   return `${year}-${month}-${day}`;
-}
-
-function getResultsFromDB (orderToDB) {
-  let message = 'this is not the message i should be';
 }
 
 function checkFoodType (res, foodType) {
@@ -87,7 +83,6 @@ function checkFoodType (res, foodType) {
 };
 
 function sendStatus (res, id) {
-    console.log(id);
     pool.query ('select * from orders where id = ?', id, (err, results, fields) => {
         if (err) {
             console.error(err);
@@ -95,15 +90,13 @@ function sendStatus (res, id) {
             console.log(results);
             message = `The status of your order is: ${results[0].status}. Last updated: ${results[0].modified}`;
             sendResponse(res, message);
-        }
-        
+        } 
     }
     )
 }
 
 function checkRequestMsg (res, responseMessage) {
   let message;
-  console.log (responseMessage[0]);
   if (responseMessage[0] === 'helpme') {
     message = 'Commands are: menu, order, status';
     sendResponse (res, message);
@@ -116,34 +109,19 @@ function checkRequestMsg (res, responseMessage) {
   } else if (responseMessage[0] === 'status') {
       const id = responseMessage[1];
     sendStatus(res, id);
-
   } else {
     message = 'invalid message';
     sendResponse (res, message);
   }
 }
 
-
-
+// Requests to router
 router.post ('/', (req, res) => {
   let message;
   console.log(req.body);
   const requestMessage = req.body.Body.toLowerCase().split(' ');
   console.log(requestMessage);
   message = checkRequestMsg (res, requestMessage);
-});
-
-// router.post('/', (req, res) => {
-//     const twiml = new MessagingResponse();
-//     console.log('hello')
-//   twiml.message('The Robots are coming! Head for the hills!');
-
-//   res.writeHead(200, {'Content-Type': 'text/xml'});
-//   res.end(twiml.toString());
-// })
-
-router.get ('/orders', (req, res) => {
-  // res.send('hello from incoming sms');
 });
 
 module.exports = router;

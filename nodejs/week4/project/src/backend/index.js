@@ -2,12 +2,8 @@ const express = require('express');
 const app = express();
 const localtunnel = require('localtunnel');
 const dotenv = require('dotenv').config();
-
-
 const port = process.env.port;
 const subdomain = {subdomain: process.env.subdomain};
-
-
 
 // Routers
 const checkRouter = require('./routes/checkRouter.js');
@@ -18,7 +14,6 @@ const kitchenRouter = require('./routes/kitchenRouter.js');
 app.use('/check', checkRouter);
 app.use('/incoming-sms', incomingSmsRouter);
 app.use('/kitchen', kitchenRouter);
-
 
 // Error handler
 app.use((err, req, res, next) => {
