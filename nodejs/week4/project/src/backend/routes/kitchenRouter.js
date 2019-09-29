@@ -1,8 +1,7 @@
 const express = require ('express');
 const router = express.Router ();
-// Database
-const pool = require ('./../database.js');
 const bodyParser = require ('body-parser');
+const pool = require ('./../database.js');
 // Recieve sms
 const MessagingResponse = require ('twilio').twiml.MessagingResponse;
 const twiml = new MessagingResponse();
@@ -37,8 +36,6 @@ router.patch('/order/:id', (req, res) => {
             twiml.message(message);
             res.writeHead(200, {'Content-Type': 'text/xml'});
             res.end(twiml.toString());
-
-            // res.send(`Status for order ${id} has been updated`);
         }
     })
 })

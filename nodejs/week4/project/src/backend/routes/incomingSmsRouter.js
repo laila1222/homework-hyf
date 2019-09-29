@@ -24,9 +24,9 @@ router.use (bodyParser.urlencoded ({extended: false}));
 client.messages
 .create({
    body: 'Hello lilla. I am from server',
-   // number bought from twilio
+   // your number  
    from: myNumber,
-   // your number
+   // number bought from twilio
    to: twilioNumber
  })
 .then(message => console.log(message.body));

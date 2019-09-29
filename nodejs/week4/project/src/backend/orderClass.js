@@ -7,12 +7,6 @@ class Order {
         this.created = new Date (Date.now());
         this.modified = new Date (Date.now());
     }
-
-    // static incrementId() {
-    //     if (!this.latestId) this.latestId = 1;
-    //     else this.latestId++;
-    //     return this.latestId;
-    // }
 };
 
 const firstOrder = new Order ('pizza', 'ordered');
