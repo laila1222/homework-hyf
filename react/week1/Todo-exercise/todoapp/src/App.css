@@ -1,0 +1,26 @@
+.container {
+  
+  width: 60vw;
+  margin: 5rem auto;
+  border: 1px solid black;
+  border-bottom: none;
+}
+
+header {
+  text-align: center;
+  padding: 1rem;
+  background-color: orange;
+  border-bottom: 1px solid black;
+  
+}
+
+.todoItem {
+  padding:  1rem;
+  margin: 0;
+  border-bottom: 1px solid black;
+  background-color: rgb(246, 220, 101);
+}
+
+button {
+  margin: 0 1rem;
+}
