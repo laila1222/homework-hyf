@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 
 class TodoItems extends Component {
+    
+    getStyle = () => {
+        return {
+            textDecoration: this.props.todo.completed ? 'line-through' : 'none',
+        }
+    }
+
     render () {
-        console.log(this.props.todo)
-        const { title } = this.props.todo;
+        const { id, title } = this.props.todo;
         return (
-            <li>
+            <li style={this.getStyle()}>
+                <input type="checkbox" onChange={this.props.checked.bind(this, id)} />
                  { title }
+                <button onClick={this.props.delete.bind(this, id) }>Delete</button>
             </li>
         )
     }
