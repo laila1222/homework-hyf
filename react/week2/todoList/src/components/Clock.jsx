@@ -11,6 +11,7 @@ class Watch extends Component {
             date: new Date()
         })
     }
+
     componentDidMount() {
         this.clock = setInterval(() => {
             this.tick()
@@ -23,9 +24,9 @@ class Watch extends Component {
 
     render () {
         return (
-            <div>
-                <h2>{this.state.date.toLocaleTimeString()}</h2>
-                <h2>Good morning</h2>
+            <div className="center text-center">
+                <h2 id="clock" className="">{this.state.date.toLocaleTimeString()}</h2>
+                <h2 className="welcome-text">Good morning</h2>
                 
             </div>
         )

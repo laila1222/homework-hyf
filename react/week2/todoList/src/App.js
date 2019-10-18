@@ -68,7 +68,8 @@ class App extends Component {
     let completedTodos = [];
     completedTodos = [...this.state.todos.filter(todo => todo.completed)];
     const sumTodos = this.state.todos.length;
-    return `Number of completed tasks: ${completedTodos.length}, number of uncompleted tasks: ${sumTodos - completedTodos.length}`;
+    return `Number of completed tasks: ${completedTodos.length}
+           Number of uncompleted tasks: ${sumTodos - completedTodos.length}`;
   }
 
 
@@ -76,18 +77,18 @@ class App extends Component {
     return (
       <div>
          
-         <div className="container">
+         <div className="container relative">
 
-           <div className="parts">
+           <div className="parts welcome-side white">
             <WelcomeSide />
            </div>
            
-           <div className="parts">
+           <div className="parts todo-side white">
             <Header />
             <Counter />
          
-            <AddTodo addTodo={this.addTodo} numberOfTodos={this.state.numberOfTodos}/>
-            <p>You have alltogether {this.state.todos.length} todos. {this.countCompletedTodos()} </p>
+            <AddTodo addTodo={this.addTodo} numberOfTodos={this.state.numberOfTodos} todos={this.state.todos} countCompletedTodos={this.countCompletedTodos}/>
+            
 
             <Todos todos={this.state.todos} checked={this.checked} delete={this.delete} />
            </div>

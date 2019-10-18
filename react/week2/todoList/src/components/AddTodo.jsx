@@ -28,6 +28,7 @@ class AddTodo extends Component {
     render () {
         return (
             <div>
+                <p>You have alltogether {this.props.todos.length} todos.<br></br> {this.props.countCompletedTodos()} </p>
                 <input type="text" name="title" value={this.state.title} onChange={this.onChange}/>
                 <p>{this.state.status}</p>
                 <button onClick={this.addTodo}>Add Todo</button>

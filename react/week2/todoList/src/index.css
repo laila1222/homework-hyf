@@ -12,10 +12,57 @@ code {
     monospace;
 }
 
+.white {
+  color: white;
+}
+
+.relative {
+  position: relative;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.center {
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .container {
   display: flex;
 }
 
 #welcome-side {
-  width: 70vw;
+  width: 75vw;
+}
+
+.welcome-text {
+  font-size: 3rem;
+  margin: .6rem 0;
+}
+
+#clock {
+  font-size: 6rem;
+  margin: .5rem 0;
+}
+
+.container {
+  background-image: url('/background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.welcome-side {
+  height: 100vh;
+}
+
+.todo-side {
+  background-color: rgba(15, 15, 15, 0.63);
+  height: 100vh;
+  width: 100%;
 }
