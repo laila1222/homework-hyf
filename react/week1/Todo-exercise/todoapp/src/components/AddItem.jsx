@@ -1,20 +1,28 @@
-// This part is not ready yet
-// import React, { Component } from 'react';
+import React, { Component } from 'react';
 
-// class AddItem extends Component {
-//     onChange = (e) {
-//        this.setState() 
-//     }
+class AddItem extends Component {
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        const title = e.target.title.value.trim();
+
+        if (title.length < 1) {
+            alert('You did not write in the input.');
+        }else {
+            this.props.handleNewTodo(title);
+            // event.target.reset();
+        }
+    }
 
 
-//     render () {
-//         return(
-//             <form>
-//                 <input type="text" name="title" placeholder="Add todo" value={this.state.title} onChange={this.onChange}/>
-//                 <input type="submit" >Add todo</input>
-//             </form>
-//         )
-//     }
-// }
+    render () {
+        return(
+            <form onSubmit={this.onSubmit}>
+                <input type="text" name="title" placeholder="Add todo"  />
+                <input type="submit" value="add" />
+            </form>
+        )
+    }
+}
 
-// default exports AddItem;
+export default AddItem;

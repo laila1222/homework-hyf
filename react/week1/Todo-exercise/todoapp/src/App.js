@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Todos from './components/Todos';
 import Header from './components/Header';
+import AddItem from './components/AddItem';
 
 class App extends Component {
   state = {
@@ -27,6 +28,8 @@ class App extends Component {
     ],
   };
 
+  prevTodoId = 3;
+
   markComplete = id => {
     this.setState ({
       todos: this.state.todos.map (todo => {
@@ -44,10 +47,22 @@ class App extends Component {
     });
   };
 
+  handleNewTodo = (title) => {
+    const newTodo = {
+      id: this.prevTodoId + 1,
+      title
+    };
+
+    this.setState({
+      todos: [...this.state.todos, newTodo]
+    })
+  };
+
   render () {
     return (
       <div className="container">
         <Header />
+        <AddItem handleNewTodo={this.handleNewTodo}/>
         <Todos
           todos={this.state.todos}
           markComplete={this.markComplete}
