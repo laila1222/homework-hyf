@@ -12,7 +12,7 @@ class TodoItems extends Component {
         const { id, title } = this.props.todo;
         return (
             <li style={this.getStyle()}>
-                <input type="checkbox" onChange={this.props.checked.bind(this, id)} />
+                <input type="checkbox" onChange={this.props.checked.bind(this, id)} checked={this.props.todo.completed} />
                  { title }
                 <button onClick={this.props.delete.bind(this, id) }>Delete</button>
             </li>

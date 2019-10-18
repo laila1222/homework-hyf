@@ -5,6 +5,7 @@ import Counter from './components/Counter';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
 import uuid from 'uuid';
+import WelcomeSide from './components/WelcomeSide';
 
 class App extends Component {
   state = {
@@ -12,7 +13,7 @@ class App extends Component {
       {
         "id": uuid.v4(),
         "title": "Get out of bed",
-        "completed": false
+        "completed": true
       },
       {
         "id": uuid.v4(),
@@ -33,17 +34,7 @@ class App extends Component {
     this.setState({numberOfTodos: this.state.todos.length});
   }
   
-  getNumberOfTodos = () => {
-    let numberOfTodos = this.state.todos.length;
-    // if (this.state.todos.length < 1) {
-    //   numberOfTodos = 'Nothing to do';
-    // } else {
-    //   numberOfTodos = this.state.todos.length;
-    // }
 
-    this.setState({ numberOfTodos });
-  
-  }
 
   addTodo = (title) => {
     const newTodo = {
@@ -51,7 +42,7 @@ class App extends Component {
       title
     }
     this.setState({ todos: [...this.state.todos, newTodo]});
-    this.getNumberOfTodos();
+
     
   }
 
@@ -70,32 +61,38 @@ class App extends Component {
     this.setState({
       todos: [...this.state.todos.filter(todo => todo.id !== id)],
     });
-    this.getNumberOfTodos();
-    console.log('delete run')
+
   };
 
-
-  // componentWillMount () {
-  //   this.addTodo();
-  //   console.log('from componentWillMount')
-  // }
-
-  // componentWillUnmount() {
-  //   this.delete();
-  //   console.log('froom will UNMOUNT')
-  // }
-
-  setTodos();
-
+  countCompletedTodos = () => {
+    let completedTodos = [];
+    completedTodos = [...this.state.todos.filter(todo => todo.completed)];
+    const sumTodos = this.state.todos.length;
+    return `Number of completed tasks: ${completedTodos.length}, number of uncompleted tasks: ${sumTodos - completedTodos.length}`;
+  }
 
 
   render () {
     return (
       <div>
-         <Header />
-         <Counter />
-         <AddTodo addTodo={this.addTodo} numberOfTodos={this.state.numberOfTodos}/>
-         <Todos todos={this.state.todos} checked={this.checked} delete={this.delete} getNumberOfTodos={ this.state.numberOfTodos }/>
+         
+         <div className="container">
+
+           <div className="parts">
+            <WelcomeSide />
+           </div>
+           
+           <div className="parts">
+            <Header />
+            <Counter />
+         
+            <AddTodo addTodo={this.addTodo} numberOfTodos={this.state.numberOfTodos}/>
+            <p>You have alltogether {this.state.todos.length} todos. {this.countCompletedTodos()} </p>
+
+            <Todos todos={this.state.todos} checked={this.checked} delete={this.delete} />
+           </div>
+         </div>
+         
       </div>
     );
   }
