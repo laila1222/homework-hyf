@@ -3,7 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import Counter from './components/Counter';
 import Todos from './components/Todos';
-import AddTodo from './components/AddTodo';
+import AddTodoForm from './components/AddTodoForm';
 import uuid from 'uuid';
 import WelcomeSide from './components/WelcomeSide';
 
@@ -87,7 +87,7 @@ class App extends Component {
             <Header />
             <Counter />
 
-            <AddTodo
+            <AddTodoForm
               addTodo={this.addTodo}
               numberOfTodos={this.state.numberOfTodos}
               todos={this.state.todos}

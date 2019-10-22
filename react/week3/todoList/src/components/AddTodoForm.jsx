@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class AddTodo extends Component {
+class AddTodoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,24 +24,28 @@ class AddTodo extends Component {
   };
 
   render() {
+    const { title, status } = this.state;
     return (
-      <div>
+      <form onSubmit={this.onSubmit}>
         <p>
           You have alltogether {this.props.todos.length} todos.<br></br>{' '}
           {this.props.countCompletedTodos()}{' '}
         </p>
-        <input
-          type="text"
-          name="title"
-          value={this.state.title}
-          onChange={this.onChange}
-        />
-        <p>{this.state.status}</p>
+        <Label title="Add todo">
+          <input
+            type="text"
+            name="title"
+            value={title}
+            onChange={this.onChange}
+          />
+        </Label>
+        
+        <p>{status}</p>
         <button onClick={this.addTodo}>Add Todo</button>
         <p>{this.props.numberOfTodos}</p>
-      </div>
+      </form>
     );
   }
 }
 
-export default AddTodo;
+export default AddTodoForm;
