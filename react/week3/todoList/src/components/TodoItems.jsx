@@ -8,7 +8,7 @@ class TodoItems extends Component {
   };
 
   render() {
-    const {id, title} = this.props.todo;
+    const {id, title, date} = this.props.todo;
     return (
       <li style={this.getStyle()}>
         <input
@@ -16,7 +16,8 @@ class TodoItems extends Component {
           onChange={this.props.checked.bind(this, id)}
           checked={this.props.todo.completed}
         />
-        {title}
+        {title} { }
+        {date}
         <button onClick={this.props.delete.bind(this, id)}>Delete</button>
       </li>
     );

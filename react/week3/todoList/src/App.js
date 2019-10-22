@@ -14,16 +14,19 @@ class App extends Component {
         id: uuid.v4 (),
         title: 'Get out of bed',
         completed: true,
+        date: '2015-11-25'
       },
       {
         id: uuid.v4 (),
         title: 'Brush teeth',
         completed: false,
+        date: '2015-11-25'
       },
       {
         id: uuid.v4 (),
         title: 'Eat breakfast',
         completed: false,
+        date: '2015-11-25'
       },
     ],
 
@@ -33,10 +36,11 @@ class App extends Component {
     this.setState ({numberOfTodos: this.state.todos.length});
   };
 
-  addTodo = title => {
+  addTodo = (title, date) => {
     const newTodo = {
       id: uuid.v4 (),
       title,
+      date
     };
     this.setState ({todos: [...this.state.todos, newTodo]});
   };
@@ -88,7 +92,7 @@ class App extends Component {
             <Counter />
 
             <AddTodoForm
-              addTodo={this.addTodo}
+              addTodoForm={this.addTodo}
               numberOfTodos={this.state.numberOfTodos}
               todos={this.state.todos}
               countCompletedTodos={this.countCompletedTodos}
@@ -97,6 +101,7 @@ class App extends Component {
             <ul id="ul-of-todos">
               <Todos
                 todos={this.state.todos}
+                date={this.state.date}
                 checked={this.checked}
                 delete={this.delete}
               />
