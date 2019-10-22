@@ -1,30 +1,39 @@
 import React, {Component} from 'react';
+import Label from './formElements/Label';
+import Input from './formElements/Input';
+import FormButton from './formElements/FormButton';
+
 
 class AddTodoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: '',
-      status: '',
+      submitString: '',
     };
   }
 
-  onChange = e => {
-    this.setState({[e.target.name]: e.target.value});
+  handleInputChange = event => {
+    this.setState({[event.target.name]: event.target.value});
+    console.log(event.target.name);
+    console.log(event.target.value);
   };
 
-  addTodo = () => {
+  onSubmit = event => {
+    event.preventDefault();
+    console.log(this.state.title)
     if (this.state.title === '') {
-      this.setState({status: 'You have to fill the field!'});
+      this.setState({submitString: 'You have to fill the field!'});
     } else {
-      console.log(this.state.title);
       this.props.addTodo(this.state.title);
-      this.setState({status: 'Task has been added.'});
+      this.setState({submitString: 'Task has been added.'});
+      this.setState({title: ''});
     }
-  };
+
+  }
 
   render() {
-    const { title, status } = this.state;
+    const { title, submitString } = this.state;
     return (
       <form onSubmit={this.onSubmit}>
         <p>
@@ -32,17 +41,17 @@ class AddTodoForm extends Component {
           {this.props.countCompletedTodos()}{' '}
         </p>
         <Label title="Add todo">
-          <input
+          <Input
             type="text"
             name="title"
             value={title}
-            onChange={this.onChange}
+            onChange={this.handleInputChange}
           />
         </Label>
         
-        <p>{status}</p>
-        <button onClick={this.addTodo}>Add Todo</button>
-        <p>{this.props.numberOfTodos}</p>
+        <p>{submitString}</p>
+
+        <FormButton title="Add Todo"></FormButton>
       </form>
     );
   }
