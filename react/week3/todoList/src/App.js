@@ -6,30 +6,31 @@ import Todos from './components/Todos';
 import AddTodoForm from './components/AddTodoForm';
 import uuid from 'uuid';
 import WelcomeSide from './components/WelcomeSide';
+import * as Api from './Api';
 
 class App extends Component {
   state = {
     todos: [
-      {
-        id: uuid.v4 (),
-        title: 'Get out of bed',
-        completed: true,
-        date: '2015-11-25'
-      },
-      {
-        id: uuid.v4 (),
-        title: 'Brush teeth',
-        completed: false,
-        date: '2015-11-25'
-      },
-      {
-        id: uuid.v4 (),
-        title: 'Eat breakfast',
-        completed: false,
-        date: '2015-11-25'
-      },
+      // {
+      //   id: uuid.v4 (),
+      //   title: 'Get out of bed',
+      //   completed: true,
+      //   date: '2015-11-25'
+      // },
+      // {
+      //   id: uuid.v4 (),
+      //   title: 'Brush teeth',
+      //   completed: false,
+      //   date: '2015-11-25'
+      // },
+      // {
+      //   id: uuid.v4 (),
+      //   title: 'Eat breakfast',
+      //   completed: false,
+      //   date: '2015-11-25'
+      // },
     ],
-
+    isLoading: true,
     numberOfTodos: undefined,
   };
   setTodos = () => {
@@ -76,6 +77,11 @@ class App extends Component {
 
     return text;
   };
+
+  async componentDidMount() {
+    const todos = await API.getTodos();
+    this.setState({ todos, isLoading: false })
+  }
 
   render () {
     return (
