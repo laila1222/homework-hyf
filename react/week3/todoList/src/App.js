@@ -7,6 +7,10 @@ import AddTodoForm from './components/AddTodoForm';
 import uuid from 'uuid';
 import WelcomeSide from './components/WelcomeSide';
 
+
+
+
+
 class App extends Component {
   state = {
     todos: [
