@@ -9,18 +9,18 @@ class TodoItems extends Component {
   };
 
   render() {
-    const {id, description, deadline} = this.props.todo;
-    console.log(id, description, deadline);
+    const { id, description, deadline } = this.props.todo;
+    console.log(this.props.description);
     return (
       <li style={this.getStyle()}>
         <input
           type="checkbox"
-          onChange={this.props.checked}
+          onChange={this.props.checked.bind(this , id)}
           checked={this.props.todo.completed}
         />
         {description} { }
         {deadline}
-        <button onClick={this.props.delete}>Delete</button>
+        <button onClick={this.props.delete.bind(this, id)}>Delete</button>
       </li>
     );
   }
