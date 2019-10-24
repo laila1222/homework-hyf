@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 
 class TodoItems extends Component {
-  constructor (props) {
-    super(props);
-    this.onChange = this.onChange.bind(this);
-  }
+  
   getStyle = () => {
     return {
       textDecoration: this.props.todo.completed ? 'line-through' : 'none',
@@ -12,8 +9,8 @@ class TodoItems extends Component {
   };
 
   render() {
-    const {id, title, date} = this.props.todo;
-    console.log(id, title, date);
+    const {id, description, deadline} = this.props.todo;
+    console.log(id, description, deadline);
     return (
       <li style={this.getStyle()}>
         <input
@@ -21,8 +18,8 @@ class TodoItems extends Component {
           onChange={this.props.checked}
           checked={this.props.todo.completed}
         />
-        {title} { }
-        {date}
+        {description} { }
+        {deadline}
         <button onClick={this.props.delete}>Delete</button>
       </li>
     );

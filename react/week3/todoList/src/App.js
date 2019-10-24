@@ -3,31 +3,16 @@ import './App.css';
 import Header from './components/Header';
 import Counter from './components/Counter';
 import WelcomeSide from './components/WelcomeSide';
-import AddTodoForm from './components/AddTodoForm';
-import TodoItems from './components/TodoItems';
+// import AddTodoForm from './components/AddTodoForm';
+// import TodoItems from './components/TodoItems';
+// import Loading from './components/Loading';
+import Todos from './components/Todos';
+
 
 class App extends Component {
-    state = {
-        todos: [],
-        numberOfTodos: undefined
-    };
+    
 
-    delete = id => {
-        this.setState ({
-            todos: [...this.state.todos.filter (todo => todo.id !== id)],
-        });
-    };
-
-    checked = id => {
-        this.setState ({
-            todos: this.state.todos.map (todo => {
-            if (todo.id === id) {
-                todo.completed = !todo.completed;
-            }
-            return todo;
-            }),
-        });
-    };
+    
 
     countCompletedTodos = () => {
         let completedTodos = [];
@@ -44,9 +29,7 @@ class App extends Component {
         return text;
       };
 
-      componentDidMount () {
-          
-      }
+      
 
     render () {
         return (
@@ -60,22 +43,16 @@ class App extends Component {
                         <Header />
                         <Counter />
     
-                        <AddTodoForm
+                        {/* <AddTodoForm
                             addTodoForm={this.addTodo}
                             numberOfTodos={this.state.numberOfTodos}
                             todos={this.state.todos}
                             countCompletedTodos={this.countCompletedTodos}
-                        />
+                        /> */}
+                        {/* {this.state.isLoading && <Loading />} */}
                         <ul id="ul-of-todos">
-                            {this.state.todos.map(todo => (
-                                <TodoItems  
-                                    key={todo.id}
-                                    todo={todo}
-                                    date={todo.date}
-                                    checked={this.checked}
-                                    delete={this.delete}
-                                />
-                            ))}
+                            <Todos />
+
                         </ul>
                     </div>
                 </div>
