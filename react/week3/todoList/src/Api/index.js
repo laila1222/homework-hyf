@@ -1,4 +1,5 @@
-const ROOT_URL = "https://gist.githubusercontent.com/benna100/391eee7a119b50bd2c5960ab51622532/raw";
+const ROOT_URL =
+  'https://gist.githubusercontent.com/benna100/391eee7a119b50bd2c5960ab51622532/raw';
 
 // const ENDPOINTS = {
 //   USERS: "/users?_limit=10",
@@ -6,9 +7,9 @@ const ROOT_URL = "https://gist.githubusercontent.com/benna100/391eee7a119b50bd2c
 // };
 
 // NOTE: you don't need await if returning (response.json() is async)
-async function getTodos() {
-  const response = await fetch(`${ROOT_URL}`);
-  return response.json();
+async function getTodos () {
+  const response = await fetch (`${ROOT_URL}`);
+  return response.json ();
 }
 
 // NOTE: you don't need await if returning (response.json() is async)
@@ -17,4 +18,4 @@ async function getTodos() {
 //   return response.json();
 // }
 
-export { getTodos };
+export {getTodos};

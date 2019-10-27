@@ -14,7 +14,7 @@ class AddTodoForm extends Component {
   }
 
   handleInputChange = event => {
-    console.log('inputchange')
+    console.log('inputchange');
     this.setState({[event.target.name]: event.target.value});
   };
 
@@ -35,8 +35,6 @@ class AddTodoForm extends Component {
       this.setState({deadline: ''});
     }
   };
-
-
 
   render() {
     const {description, submitString, deadline} = this.state;
