@@ -1,32 +1,46 @@
 import React, { Component } from 'react';
 import * as API from '../api';
 import UserItem from './UserItem';
+import Loader from './Loader';
 
 class UserSearch extends Component {
     state = {
         userName: undefined,
-        users: []
+        users: [],
+        isLoading: true
     };
 
+    async getFetchData () {
+        const users = await API.getUsers(this.state.userName);
+        const userItems = users.items
+        this.setState({ users: userItems, isLoading: false });
+        console.log(this.state.users);
+    }
+
     handleInputChange = event => {
-        this.setState({[event.target.name]: event.target.value});
+        console.log(event.target.value);
+        this.setState({[event.target.name]: event.target.value, isLoading: true}, () => this.getFetchData());
         
     }
 
     async componentDidMount () {
-        console.log(this.state.userName);
         const users = await API.getUsers(this.state.userName);
         const userItems = users.items;
-        this.setState({ users: userItems });
-        console.log(this.state.users);
+        this.setState({ users: userItems, isLoading: false });
     }
 
     render () {
         return (
             <div>
                 <input type="text" name="userName" placeholder="Type Github username" onChange={this.handleInputChange}/>
-                {this.state.users.map(user => (
-                    <UserItem key={user.id} userName={user.login} />
+                {this.state.isLoading && <Loader />}
+                {!this.state.users ? (
+                    <p>No such user</p>
+                ) : (
+                    this.state.users.map(user => (
+                        <UserItem key={user.id} userName={user.login} />
+                )
+                    
                 ))}
                 
             </div>
