@@ -5,9 +5,15 @@ const ENDPOINT = {
 };
 
 async function getUsers (username) {
-    const response = await fetch(`${ROOT_URL}${ENDPOINT.USERS}${username}`);
-    console.log(response);
-    return response.json();
+    try {
+        const response = await fetch(`${ROOT_URL}${ENDPOINT.USERS}${username}`);
+        console.log(response);
+        return response.json(); 
+    } catch (error) {
+        console.error(error);
+    }
+          
+         
 }
 
 export { getUsers };
