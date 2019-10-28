@@ -4,8 +4,9 @@ const ENDPOINT = {
     USERS: '/users?q='
 };
 
-async function getUsers (userName) {
-    const response = await fetch(`${ROOT_URL}${ENDPOINT.USERS}(userName)`);
+async function getUsers (username) {
+    const response = await fetch(`${ROOT_URL}${ENDPOINT.USERS}${username}`);
+    console.log(response);
     return response.json();
 }
 

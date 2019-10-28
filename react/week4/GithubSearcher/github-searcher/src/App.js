@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import Headline from './components/Headline';
-import Users from './components/Users';
+import UserSearch from './components/UserSearch';
 
 function App() {
   return (
     <div>
       <Headline />
-      <Users />
+      <UserSearch />
     </div>
   );
 }
