@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
-import EditTodo from './EditTodo';
+import Input from './formElements/Input';
 
 class TodoItems extends Component {
-  constructor() {
-    super();
-    this.editTodo = this.toggleForm.bind(this);
-    // this.saveTodo = this.saveTodo.bind(this);
-  }
+
 
   state = {
     inEdit: false,
+    description: '',
   };
 
   getStyle = () => {
@@ -24,12 +21,15 @@ class TodoItems extends Component {
 
   saveTodo = event => {
     event.preventDefault();
-    const {id, editTodo} = this.props;
-    const newTodoDescription = event.target.description.value;
-    editTodo(id, newTodoDescription);
-    this.setState({
-      inEdit: false,
-    });
+    const { id } = this.props.todo;
+    this.props.handleSave( this.state.description, id);
+    this.setState({ inEdit: false });
+    
+    
+  };
+
+  handleInputChange = event => {
+    this.setState({[event.target.name]: event.target.value});
   };
 
 
@@ -41,24 +41,53 @@ class TodoItems extends Component {
       <li style={this.getStyle()}>
         {!this.state.inEdit ? (
           <span>
+            
+            
+          <span>
             {description}
+            {' - '}
             {deadline}
           </span>
+
+          <Input 
+              type="checkbox"
+              onChange={this.props.checked.bind(this, id)}
+              checked={this.props.todo.completed}
+            />
+            
+
+          <Input 
+            type="button"
+            name="delete"
+            value="Delete"
+            onClick={this.props.delete.bind(this, id)}
+          />
+
+          <Input 
+            type="button"
+            name="edit"
+            value="Edit"
+            onClick={this.toggleForm}
+          />
+
+          </span>
         ) : (
-          <form onSubmit={this.props.saveTodo}>
-            <input name="description" type="text" defaultValue={description} />
-            <button>Done</button>
+          <form onSubmit={this.saveTodo.bind(this)}>
+            <Input
+              type="text"
+              name="description"
+              value={this.state.description} 
+              onChange={this.handleInputChange.bind(this)}
+            />
+            <Input 
+              type="submit"
+              value="Save"
+            />
           </form>
         )}
 
-        <EditTodo toggleForm={this.toggleForm} />
-        <button onClick={this.props.delete.bind(this, id)}>Delete</button>
-
-        <input
-          type="checkbox"
-          onChange={this.props.checked.bind(this, id)}
-          checked={this.props.todo.completed}
-        />
+        
+        
       </li>
     );
   }

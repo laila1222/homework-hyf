@@ -65,6 +65,18 @@ class Todos extends Component {
     });
   };
 
+  handleSave = (description, id) => {
+    console.log(description, id);
+    this.setState({ 
+      todos: this.state.todos.map(todo => {
+        if (todo.id === id) {
+          todo.description= description
+        } 
+        return todo;
+      })
+    })
+  }
+
   async componentDidMount() {
     const todos = await API.getTodos();
     // Add completed property for the todos
@@ -89,6 +101,7 @@ class Todos extends Component {
             checked={this.checked}
             delete={this.delete}
             editTask={this.handleEditTask}
+            handleSave={this.handleSave}
           />
         ))}
       </div>
