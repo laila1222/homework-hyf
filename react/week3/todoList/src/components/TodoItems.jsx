@@ -7,6 +7,7 @@ class TodoItems extends Component {
   state = {
     inEdit: false,
     description: '',
+    deadline: '',
   };
 
   getStyle = () => {
@@ -22,7 +23,8 @@ class TodoItems extends Component {
   saveTodo = event => {
     event.preventDefault();
     const { id } = this.props.todo;
-    this.props.handleSave( this.state.description, id);
+    const { deadline, description } = this.state;
+    this.props.handleSave( description, deadline, id);
     this.setState({ inEdit: false });
     
     
@@ -73,12 +75,21 @@ class TodoItems extends Component {
           </span>
         ) : (
           <form onSubmit={this.saveTodo.bind(this)}>
+
             <Input
               type="text"
               name="description"
               value={this.state.description} 
               onChange={this.handleInputChange.bind(this)}
             />
+
+            <Input 
+              type="date"
+              name="deadline"
+              value={this.state.deadline}
+              onChange={this.handleInputChange.bind(this)}
+            />
+
             <Input 
               type="submit"
               value="Save"

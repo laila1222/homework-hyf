@@ -9,7 +9,6 @@ class AddTodoForm extends Component {
     this.state = {
       description: '',
       deadline: '',
-      submitString: '',
     };
   }
 
@@ -24,16 +23,11 @@ class AddTodoForm extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    if (this.state.description === '' || this.state.deadline === '') {
-      this.setState({
-        submitString: 'You have to fill the field and select due date!',
-      });
-    } else {
-      this.props.addTodo(this.state.description, this.state.deadline);
-      this.setState({submitString: 'Task has been added.'});
-      this.setState({description: ''});
-      this.setState({deadline: ''});
-    }
+    this.props.addTodo(this.state.description, this.state.deadline);
+    this.setState({submitString: 'Task has been added.'});
+    this.setState({description: ''});
+    this.setState({deadline: ''});
+    
   };
 
   render() {
@@ -51,6 +45,7 @@ class AddTodoForm extends Component {
             name="description"
             value={description}
             onChange={this.handleInputChange}
+            required="required"
           />
         </Label>
 
@@ -60,6 +55,7 @@ class AddTodoForm extends Component {
             name="deadline"
             onChange={this.handleDateChange}
             value={deadline}
+            required="required"
           />
         </Label>
 

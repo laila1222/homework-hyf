@@ -65,12 +65,13 @@ class Todos extends Component {
     });
   };
 
-  handleSave = (description, id) => {
+  handleSave = (description, deadline, id) => {
     console.log(description, id);
     this.setState({ 
       todos: this.state.todos.map(todo => {
         if (todo.id === id) {
-          todo.description= description
+          todo.description= description;
+          todo.deadline = deadline;
         } 
         return todo;
       })
