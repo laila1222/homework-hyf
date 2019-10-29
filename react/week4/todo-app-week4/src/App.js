@@ -4,6 +4,7 @@ import Headline from './components/Headline';
 import AddTodoForm from './components/AddTodoForm';
 import Todos from './components/Todos';
 import * as API from './api';
+import uuid from 'uuid';
 
 class App extends Component {
    state = {
@@ -30,8 +31,17 @@ class App extends Component {
     });
   }
 
-
-
+  addNewTodo = (description) => {
+    console.log('added new todo', description);
+    const newTodo = {
+      id: uuid.v4(),
+      description: description,
+      deadline: '2012-12-05',
+      completed: false
+    }
+    this.setState({ todos: [...this.state.todos, newTodo]});
+    console.log(this.state.todos);
+  }
 
   async componentDidMount () {
     const todos = await API.getTodos();
@@ -46,7 +56,7 @@ class App extends Component {
     return (
       <div className="App">
         <Headline />
-        <AddTodoForm />
+        <AddTodoForm addNewTodo={this.addNewTodo}/>
         <Todos todos={this.state.todos} handleChecked={this.handleChecked} delete={this.delete}/>
       </div> 
     );
