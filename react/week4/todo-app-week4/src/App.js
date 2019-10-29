@@ -11,7 +11,6 @@ class App extends Component {
       todos: []
     }
 
-  
 
   handleChecked = id => {;
     this.setState({
@@ -31,16 +30,28 @@ class App extends Component {
     });
   }
 
-  addNewTodo = (description) => {
+  addNewTodo = (description, deadline) => {
     console.log('added new todo', description);
     const newTodo = {
       id: uuid.v4(),
       description: description,
-      deadline: '2012-12-05',
-      completed: false
+      deadline: deadline,
+      completed: false,
     }
     this.setState({ todos: [...this.state.todos, newTodo]});
-    console.log(this.state.todos);
+  }
+
+  saveEdited = (description, deadline, id) => {
+    console.log(description, deadline, id);
+    this.setState({
+      todos: this.state.todos.map(todo => {
+        if (todo.id === id) {
+          todo.description = description;
+          todo.deadline = deadline;
+        }
+        return todo;
+      })
+    })
   }
 
   async componentDidMount () {
@@ -57,7 +68,7 @@ class App extends Component {
       <div className="App">
         <Headline />
         <AddTodoForm addNewTodo={this.addNewTodo}/>
-        <Todos todos={this.state.todos} handleChecked={this.handleChecked} delete={this.delete}/>
+        <Todos todos={this.state.todos} handleChecked={this.handleChecked} delete={this.delete} saveEdited={this.saveEdited}/>
       </div> 
     );
   }

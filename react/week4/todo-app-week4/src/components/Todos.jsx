@@ -12,6 +12,7 @@ class Todos extends Component {
                     key={todo.id}
                     handleChecked={this.props.handleChecked}
                     delete={this.props.delete}
+                    saveEdited={this.props.saveEdited}
                 />
             ))
             }
