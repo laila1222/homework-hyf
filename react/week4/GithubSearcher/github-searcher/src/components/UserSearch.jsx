@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import * as API from '../api';
 import UserItem from './UserItem';
 import Loader from './Loader';
+import LanguageContext from '../contexts/LanguageContext';
 
 class UserSearch extends Component {
+    static contextType = LanguageContext;
+
+
     state = {
         userName: undefined,
         users: [],
@@ -36,10 +40,11 @@ class UserSearch extends Component {
     }
 
     render () {
+        const placeholder = this.context === 'english' ? 'Type Github username' : 'Felhasználó név'
         return (
             
             <div>
-                <input type="text" name="userName" placeholder="Type Github username" onChange={this.handleInputChange}/>
+                <input type="text" name="userName" placeholder={placeholder} onChange={this.handleInputChange}/>
                 {this.state.isLoading && <Loader />}
                 {!this.state.users ? (
                     <p>No such user</p>
