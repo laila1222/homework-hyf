@@ -5,6 +5,8 @@ import UserSearch from './components/UserSearch';
 import LanguageContext from './contexts/LanguageContext';
 
 class App extends React.Component {
+  static contextType = LanguageContext;
+
   state = {
     language: 'english',
   };
@@ -14,23 +16,26 @@ class App extends React.Component {
   };
 
   render () {
+   
     return (
       <div className="ui container">
         <div>
-          Select language:
-          <i
-            className="flag us"
-            onClick={() => this.onLanguageChange ('english')}
-          />
-          <i
-            className="flag hu"
-            onClick={() => this.onLanguageChange ('hungarian')}
-          />
-          <p>Current language: {this.state.language}</p>
+          <h5 className="header d-inline">Select language:</h5>
+          <div className="d-inline">
+            <i
+              className="flag us"
+              onClick={() => this.onLanguageChange ('english')}
+            />
+            <i
+              className="flag hu"
+              onClick={() => this.onLanguageChange ('hungarian')}
+            />
+          </div>
+
         </div>
 
         <LanguageContext.Provider value={this.state.language}>
-          <Headline />
+          <Headline className="center"/>
           <UserSearch />
         </LanguageContext.Provider>
 

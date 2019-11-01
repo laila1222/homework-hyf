@@ -1,5 +1,6 @@
 import React from 'react';
 import LanguageContext from '../contexts/LanguageContext';
+import '../App.css';
 
 class Headline extends React.Component {
   static contextType = LanguageContext;
@@ -10,7 +11,7 @@ class Headline extends React.Component {
       : 'Github felhasználó kereső';
     return (
       <div>
-        <h1>{text}</h1>
+        <h1 className="ui header center">{text}</h1>
 
       </div>
     );
