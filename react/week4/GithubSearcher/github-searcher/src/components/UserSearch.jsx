@@ -4,9 +4,10 @@ import UserItem from './UserItem';
 import Loader from './Loader';
 import LanguageContext from '../contexts/StateContext';
 import ContextStates from '../contexts/StateContext';
+import ErrorText from './ErrorText';
 
-import NoResult from './NoResults';
 import './UserItem.css';
+import NoResult from './NoResults';
 
 class UserSearch extends Component {
   static contextType = LanguageContext;
@@ -15,18 +16,27 @@ class UserSearch extends Component {
     userName: ContextStates.userName,
     users: ContextStates.users,
     isLoading: ContextStates.isLoading,
+    errorText: ContextStates.errorText
   };
 
   async getFetchData() {
-    const users = await API.getUsers(this.state.userName);
-    const userItems = users.items;
-    this.setState({users: userItems, isLoading: false});
+    if (this.state.userName) {
+      this.setState({isLoading: true});
+      const users = await API.getUsers(this.state.userName);
+      const errorText = typeof resp === 'string' ? users : undefined;
+      this.setState({errorText});
+      const userItems = users.items;
+      this.setState({users: userItems, isLoading: false});
+
+    }
+    
+    
   }
 
   handleInputChange = event => {
     console.log(event.target.value);
     this.setState(
-      {[event.target.name]: event.target.value, isLoading: true},
+      {[event.target.name]: event.target.value, isLoading: true, errorText: ''},
       () => this.getFetchData()
     );
     console.log(this.state.users);
@@ -38,10 +48,12 @@ class UserSearch extends Component {
     this.setState({users: userItems, isLoading: false});
   }
 
+
+
   render() {
     const placeholder =
       this.context.states.language === 'english' ? 'Type' : 'irj';
-
+    const { users, userName, isLoading, errorText } = this.state;
     console.log(this.context);
     return (
       <div>
@@ -54,6 +66,7 @@ class UserSearch extends Component {
             onChange={this.handleInputChange}
           />
         </div>
+        {errorText && <ErrorText error={errorText}/>}
 
         {this.state.isLoading && <Loader />}
         {!this.state.users ? (
@@ -61,7 +74,10 @@ class UserSearch extends Component {
         ) : (
           <div className="ui grid">
             <div className="three column row" id="user-result-container">
-              {this.state.users.map(user => (
+              <ContextStates.Provider value={{ users, userName, isLoading, errorText }} >
+                <UserItem />
+              </ContextStates.Provider>
+              {/* {this.state.users.map(user => (
                 <UserItem
                   key={user.id}
                   login={user.login}
@@ -70,7 +86,7 @@ class UserSearch extends Component {
                   id={user.id}
                   score={user.score}
                 />
-              ))}
+              ))} */}
             </div>
           </div>
         )}

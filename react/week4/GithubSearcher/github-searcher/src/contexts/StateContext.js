@@ -3,8 +3,9 @@ import React from 'react';
 export const states = {
   userName: undefined,
   users: [],
-  isLoading: true,
+  isLoading: false,
   language: 'english',
+  errorText: undefined
 };
 
 const ContextStates = React.createContext ({
