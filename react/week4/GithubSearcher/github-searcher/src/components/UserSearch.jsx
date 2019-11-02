@@ -16,21 +16,18 @@ class UserSearch extends Component {
     userName: ContextStates.userName,
     users: ContextStates.users,
     isLoading: ContextStates.isLoading,
-    errorText: ContextStates.errorText
+    errorText: ContextStates.errorText,
   };
 
   async getFetchData() {
     if (this.state.userName) {
       this.setState({isLoading: true});
       const users = await API.getUsers(this.state.userName);
-      const errorText = typeof resp === 'string' ? users : undefined;
+      const errorText = typeof users === 'string' ? users : undefined;
       this.setState({errorText});
       const userItems = users.items;
       this.setState({users: userItems, isLoading: false});
-
     }
-    
-    
   }
 
   handleInputChange = event => {
@@ -48,12 +45,10 @@ class UserSearch extends Component {
     this.setState({users: userItems, isLoading: false});
   }
 
-
-
   render() {
     const placeholder =
       this.context.states.language === 'english' ? 'Type' : 'irj';
-    const { users, userName, isLoading, errorText } = this.state;
+    const {users, userName, errorText} = this.state;
     console.log(this.context);
     return (
       <div>
@@ -66,7 +61,6 @@ class UserSearch extends Component {
             onChange={this.handleInputChange}
           />
         </div>
-        {errorText && <ErrorText error={errorText}/>}
 
         {this.state.isLoading && <Loader />}
         {!this.state.users ? (
@@ -74,23 +68,14 @@ class UserSearch extends Component {
         ) : (
           <div className="ui grid">
             <div className="three column row" id="user-result-container">
-              <ContextStates.Provider value={{ users, userName, isLoading, errorText }} >
+              <ContextStates.Provider value={{users, userName, errorText}}>
+                {errorText && <ErrorText error={errorText} />}
                 <UserItem />
               </ContextStates.Provider>
-              {/* {this.state.users.map(user => (
-                <UserItem
-                  key={user.id}
-                  login={user.login}
-                  avatar_url={user.avatar_url}
-                  type={user.type}
-                  id={user.id}
-                  score={user.score}
-                />
-              ))} */}
             </div>
           </div>
         )}
-        {this.state.error ? <p>{this.state.error}</p> : <p>No error</p>}
+        {/* {this.state.error ? <p>{this.state.error}</p> : <p>No error</p>} */}
       </div>
     );
   }

@@ -9,7 +9,10 @@ async function getUsers (username) {
   if (response.status === 200) {
     return await response.json ();
   } else {
+
+      console.log(response.statusText);
     return response.statusText;
+
   }
 }
 

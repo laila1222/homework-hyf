@@ -3,10 +3,6 @@ import './UserItem.css';
 import LanguageContext from '../contexts/LanguageContext';
 import ContextStates from '../contexts/StateContext';
 
-
-
-
-
 class UserItem extends Component {
   static contextType = LanguageContext;
 
@@ -18,14 +14,18 @@ class UserItem extends Component {
         ? 'Click to open repository'
         : 'Tovább a tárhelyhez';
     const scoreText = this.context === 'english' ? 'Score' : 'Helyezés';
-    
+
     return (
       <ContextStates.Consumer>
-        {({ users }) => {
-          return(
-            <ul >
+        {({users}) => {
+          return (
+            <ul>
               {users.map(user => (
-                <div className="ui link cards " id="card-container" key={user.id}>
+                <div
+                  className="ui link cards "
+                  id="card-container"
+                  key={user.id}
+                >
                   <div className="card">
                     <div className="image">
                       <img alt="avatar" src={user.avatar_url} />
@@ -45,13 +45,9 @@ class UserItem extends Component {
                 </div>
               ))}
             </ul>
-            
-            
-            
-          )
+          );
         }}
       </ContextStates.Consumer>
-      
     );
   }
 }
