@@ -1,0 +1,33 @@
+/* #logo {
+    display: inline;
+}
+
+#header-search {
+    display: inline;
+    
+} */
+
+#header-search input {
+    width: 30vw;
+    
+}
+form {
+    padding: 0
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem .5rem 2rem;
+    border-bottom: rgb(44, 43, 44) 1px solid;
+}
+
+#main-container {
+    display: flex;
+
+}
+
+#mainside-container {
+    width: 100%;
+    padding: 1rem;
+}

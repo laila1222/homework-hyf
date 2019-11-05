@@ -1,74 +1,97 @@
 import React from 'react';
 import * as API from '../api';
-import StateContext from '../contexts/index';
 import ErrorText from './ErrorText';
+// import {BrowserRouter as Link} from 'react-router-dom';
+import UserItem from './UserItem';
+import '../index.css';
+import './UserSearch.css';
+import Headline from './Headline';
 
 class UserSearch extends React.Component {
-    state = {
-        users: StateContext.users,
-        userName: '',
-        isLoading: StateContext.isLoading,
-        errorText: '' 
+  state = {
+    users: [],
+    userName: '',
+    isLoading: false,
+    errorText: '',
+  };
+
+  inputRef = React.createRef();
+
+  async getFetchData() {
+    this.setState({isLoading: true});
+    const response = await API.fetchUser(this.state.userName);
+    if (typeof response === 'string') {
+      this.setState({errorText: response});
+      console.log(response);
     }
-
-    inputRef = React.createRef();
-
-    async getFetchData () {
-        
-            this.setState({isLoading: true});
-            const response = await API.fetchUser(this.state.userName);
-            if (typeof(response) === 'string') {
-                this.setState({errorText: response});
-                console.log(response);
-            } 
-            
-            this.setState({users: response});
-            console.log(this.state.users);
-            if (this.state.users.total_count === 0) {
-                this.setState({errorText: 'No results'});
-            }
-        
+    const users = response.items;
+    this.setState({users});
+    console.log(this.state.users);
+    console.log(this.state.users.total_count);
+    if (this.state.users.length === 0) {
+      this.setState({errorText: 'No results'});
     }
+  }
 
-    // handleInputChange = event => {
-    //     this.setState({[event.target.name]: event.target.value, isLoading: true }, () => this.getFetchData())
-    // }
-
-    handleFormSubmit = event => {
-        this.setState({errorText: ''});
-        event.preventDefault();
-        if (!this.inputRef.current.value) {
-            this.setState({errorText: 'Ho, you need to give me a name to search for!'});
-            console.log('type a name!')
-        } else {
-            this.setState({ userName: this.inputRef.current.value, isLoading: true }, () => this.getFetchData());
-            console.log(this.inputRef.current.value);
-        }
-        
+  handleFormSubmit = event => {
+    this.setState({errorText: ''});
+    event.preventDefault();
+    if (!this.inputRef.current.value) {
+      this.setState({
+        errorText: 'Ho, you need to give me a name to search for!',
+      });
+    } else {
+      this.setState(
+        {userName: this.inputRef.current.value, isLoading: true},
+        () => this.getFetchData()
+      );
     }
+  };
 
-    // forceUpdateSearch = () => {
-    //     console.log('updated');
-    //     this.forceUpdate();
-        
-    // }
+  render() {
+    return (
+      <div>
+        <div id="search-bar">
+          <div className="to-center">
+            <Headline />
+            <form onSubmit={this.handleFormSubmit} className="ui search">
+              <div className="ui icon input">
+                <input
+                  className="prompt"
+                  type="text"
+                  name="userName"
+                  ref={this.inputRef}
+                  placeholder="Search..."
+                />
+              </div>
+              <div id="button-container">
+                <button className="ui button prompt" type="submit">
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
 
-    
-
-    render () {
-        return (
-            <div>
-                <h1>Search for a Github user</h1>
-                <form onSubmit={this.handleFormSubmit}>
-                    <input type="text" name="userName" ref={this.inputRef}/>
-                    <button type="submit">Search</button>
-                    { this.state.errorText && <ErrorText error={this.state.errorText} />}
-                </form>
-                
-            </div>
-            
-        )
-    }
+        <div className="container">
+          {this.state.errorText && <ErrorText error={this.state.errorText} />}
+          <div id="users-container" className="ui four column grid ">
+            {this.state.users.map(user => (
+              <UserItem
+                key={user.id}
+                login={user.login}
+                avatar_url={user.avatar_url}
+                url={user.url}
+                score={user.score}
+                type={user.type}
+                id={user.id}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default UserSearch;
