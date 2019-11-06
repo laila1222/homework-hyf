@@ -21,7 +21,7 @@ class MainSide extends React.Component {
               
             break;
         
-            case 'Stars':
+            case 'Starred':
                     this.setState({url: starred_url})
                 console.log('stars');
             break;
@@ -57,13 +57,13 @@ class MainSide extends React.Component {
             <div id="mainside-container">
                 <div className="ui five item menu">
                     <MenuItem name="Repositories" onClick={this.handleMenuClick}  />
-                    <MenuItem name="Stars" onClick={this.handleMenuClick} />
+                    <MenuItem name="Starred" onClick={this.handleMenuClick} />
                     <MenuItem name="Followers" onClick={this.handleMenuClick}  />
                     <MenuItem name="Following" onClick={this.handleMenuClick}  />
                 </div>
                 <div>
                     { this.state.activeItem === 'Repositories' && <ActiveMenu activeMenuName={this.state.activeItem} url={this.props.repos_url} />}
-                    { this.state.activeItem === 'Stars' && <ActiveMenu activeMenuName={this.state.activeItem} url={this.props.starred_url} />}
+                    { this.state.activeItem === 'Starred' && <ActiveMenu activeMenuName={this.state.activeItem} url={this.props.starred_url} />}
                     { this.state.activeItem === 'Followers' && <ActiveMenu activeMenuName={this.state.activeItem} url={this.props.followers_url} />}
                     { this.state.activeItem === 'Following' && <ActiveMenu activeMenuName={this.state.activeItem} url={this.props.following_url} />}
 

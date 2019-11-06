@@ -1,5 +1,7 @@
 import React from 'react';
 import * as API from '../../api';
+import Repos from './Repos';
+import Followers from './Followers';
 
 class ActiveMenu extends React.Component {
   state = {
@@ -21,7 +23,7 @@ class ActiveMenu extends React.Component {
             .then(res => res.json())
             .then(data => this.setState({data}));
         } else {
-          console.log('error');
+          console.log('error in fetching data');
         }
       }, 2000);
     });
@@ -39,16 +41,30 @@ class ActiveMenu extends React.Component {
       <div>
         <h2>{this.props.activeMenuName}</h2>
         <ul>
-            {this.state.data.map(repo => (
-                <li key={repo.id}>
-                    <h4><a href={repo.url}>{repo.name}</a></h4>
-                    <p>{repo.description}</p>
-                    
-                    </li>
+          {this.props.activeMenuName === 'Repositories' &&
+            this.state.data.map(repo => (
+              <Repos
+                key={repo.id}
+                url={repo.url}
+                name={repo.name}
+                description={repo.description}
+              />
             ))}
-            {}
+          {this.props.activeMenuName === 'Starred' && (
+            <p>
+              This is some weird url from the api, that doesnt work as it is.
+            </p>
+          )}
+          {this.props.activeMenuName === 'Followers' &&
+            this.state.data.map(follower => (
+              <Followers
+                key={follower.id}
+                url={follower.url}
+                avatar_url={follower.avatar_url}
+                login={follower.login}
+              />
+            ))}
         </ul>
-        
       </div>
     );
   }
