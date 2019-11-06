@@ -17,4 +17,10 @@ async function fetchUser (userName) {
   // }
 }
 
-export {fetchUser};
+async function fetchData (url) {
+   const response = await fetch (`${url}`);
+  //  console.log(response);
+   return await response.json()
+}
+
+export { fetchUser, fetchData };

@@ -7,6 +7,9 @@ import {
 } from 'react-router-dom';
 import UserSearch from './components/UserSearch';
 import UserProfile from './components/UserProfileComponents/UserProfile';
+import Header from './components/UserProfileComponents/Header';
+import Sidebar from './components/UserProfileComponents/Sidebar';
+import MainSide from './components/UserProfileComponents/MainSide';
 
 class App extends React.Component {
   render () {
@@ -18,7 +21,16 @@ class App extends React.Component {
             
           </Route>
 
-          <Route exact path="/user/:id" render={({ match }) => <UserProfile id={match.params.id} /> } />
+          <Route exact path="/user/:id" render={({ match }) => 
+            <UserProfile id={match.params.id}>
+              <Header />
+              <div id="main-container">
+                <Sidebar id={match.params.id} />
+                <MainSide id={match.params.id} />
+              </div>
+            </UserProfile>
+            
+            } />
         </Switch>
       </Router>
     );

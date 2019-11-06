@@ -6,7 +6,8 @@ import MainSide from './MainSide';
 
 class UserProfile extends React.Component {
     state ={
-        user: []
+        user: [],
+        
     }
 
 
@@ -14,19 +15,20 @@ class UserProfile extends React.Component {
     async componentDidMount () {
         const response = await API.fetchUser(this.props.id);
         const user = response.items[0];
-        console.log(user);
-        this.setState({ user })
+        // console.log(user);
+        await this.setState({ user })
+        // await console.log(this.state.user);
     }
 
     render () {
-        // console.log(this.props);
-        const { login, avatar_url, id, score, type } = this.state.user;
+        console.log(this.state.user);
+        const { login, avatar_url, id, score, type, followers_url, following_url, organizations_url, repos_url, starred_url } = this.state.user;
         return (
             <React.Fragment>
                 <Header />
                 <div id="main-container">
                     <Sidebar avatar_url={avatar_url} login={login} id={id} score={score} type={type} />
-                    <MainSide user={this.state.user} />
+                    <MainSide   followers_url={followers_url} following_url={following_url} organizations_url={organizations_url} repos_url={repos_url} starred_url={starred_url} />
                 </div>
                
             </React.Fragment>
