@@ -1,7 +1,7 @@
 import React from 'react';
-import * as API from '../../api';
 import Repos from './Repos';
 import Followers from './Followers';
+import Organizations from './Organizations';
 
 class ActiveMenu extends React.Component {
   state = {
@@ -10,12 +10,12 @@ class ActiveMenu extends React.Component {
   };
 
   componentDidMount() {
-    let response;
     const changeUrl = new Promise(() => {
       setTimeout(() => {
         this.setState({url: this.props.url});
       }, 1000);
     });
+
     const fetchData = new Promise((resolve, reject) => {
       setTimeout(() => {
         if (fetch(this.state.url)) {
@@ -35,8 +35,6 @@ class ActiveMenu extends React.Component {
   render() {
     console.log(this.state.url);
     console.log(this.state.data);
-    // console.log(this.state.url);
-    // const { followers_url, following_url, starred_url, repos_url } = this.props.user;
     return (
       <div>
         <h2>{this.props.activeMenuName}</h2>
@@ -62,6 +60,16 @@ class ActiveMenu extends React.Component {
                 url={follower.url}
                 avatar_url={follower.avatar_url}
                 login={follower.login}
+              />
+            ))}
+          {this.props.activeMenuName === 'Organizations' &&
+            this.state.data.map(org => (
+              <Organizations
+                key={org.key}
+                login={org.login}
+                url={org.url}
+                description={org.description}
+                avatar_url={org.avatar_url}
               />
             ))}
         </ul>

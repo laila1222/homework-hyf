@@ -1,10 +1,6 @@
 import React from 'react';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import UserSearch from './components/UserSearch';
 import UserProfile from './components/UserProfileComponents/UserProfile';
 import Header from './components/UserProfileComponents/Header';
@@ -18,19 +14,23 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/">
             <UserSearch />
-            
+
           </Route>
 
-          <Route exact path="/user/:id" render={({ match }) => 
-            <UserProfile id={match.params.id}>
-              <Header />
-              <div id="main-container">
-                <Sidebar id={match.params.id} />
-                <MainSide id={match.params.id} />
-              </div>
-            </UserProfile>
-            
-            } />
+          <Route
+            exact
+            path="/user/:id/"
+            render={({match}) => (
+              <UserProfile id={match.params.id}>
+                <Header />
+                <div id="main-container">
+                  <Sidebar id={match.params.id} />
+                  <MainSide id={match.params.id} />
+                </div>
+              </UserProfile>
+            )}
+          />
+
         </Switch>
       </Router>
     );

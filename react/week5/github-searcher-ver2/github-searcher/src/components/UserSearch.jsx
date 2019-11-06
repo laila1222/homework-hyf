@@ -22,12 +22,9 @@ class UserSearch extends React.Component {
     const response = await API.fetchUser(this.state.userName);
     if (typeof response === 'string') {
       this.setState({errorText: response});
-      console.log(response);
     }
     const users = response.items;
     this.setState({users});
-    console.log(this.state.users);
-    console.log(this.state.users.total_count);
     if (this.state.users.length === 0) {
       this.setState({errorText: 'No results'});
     }
