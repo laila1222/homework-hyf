@@ -2,14 +2,18 @@ import React from 'react';
 
 class Repos extends React.Component {
   render() {
-    const {id, url, name, description} = this.props;
+    const {id, html_url, name, description} = this.props;
     return (
-      <li key={id}>
-        <h4>
-          <a href={url}>{name}</a>
-        </h4>
-        <p>{description}</p>
-      </li>
+      <div key={id} className="item repos">
+        <div className="content">
+          <a className="header" href={html_url} target="_blank">{name}</a>
+          <div className="description">
+            {description}
+          </div>
+        </div>
+
+      </div>
+     
     );
   }
 }

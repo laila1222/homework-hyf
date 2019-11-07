@@ -1,18 +1,13 @@
-/* #logo {
-    display: inline;
-}
 
-#header-search {
-    display: inline;
-    
-} */
+
 
 #header-search input {
     width: 30vw;
     
 }
-form {
-    padding: 0
+
+.light-color {
+    color: rgb(194, 194, 194);
 }
 
 header {
@@ -24,10 +19,78 @@ header {
 
 #main-container {
     display: flex;
+    min-height: 100vh;
 
 }
 
 #mainside-container {
     width: 100%;
+    border: 1px solid gray;
+}
+
+#sidebar {
+    padding: 1.5rem;
+    width: 30vw;
+    border: 1px solid gray;
+}
+
+#sidebar-avatar {
+    width: 100%;
+}
+
+#menu-container {
+    width: 100%;
+    display: flex;
+    background-color: rgb(66, 65, 65);
+    justify-content: space-evenly;
+    
+}
+
+.item {
+    margin: 0;
+    padding: 1rem;
+    cursor: pointer;
+    background-color:rgb(66, 65, 65);
+    border: none; 
+}
+
+.item:hover {
+    background-color: rgb(105, 104, 104)
+}
+
+.item:active {
+    background-color: rgb(93, 87, 87);
+}
+
+#data-container {
+    padding: 1rem;
+
+}
+
+ul {
+    padding-left: 0;
+}
+
+.repos {
+    background-color: rgb(7, 7, 7);
+}
+
+.repos:hover {
+    background:rgb(49, 49, 49);
+}
+
+#active-menu-name {
+    padding-left: 1rem;
+}
+
+.org-image, .followers-image {
+    width: 100%;
+}
+
+.org-card, .followers-card {
+    margin: 1rem auto;
+}
+
+.card-padding {
     padding: 1rem;
 }

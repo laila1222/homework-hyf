@@ -4,12 +4,12 @@ class Sidebar extends React.Component {
   render() {
     const {login, avatar_url, id, score, type} = this.props;
     return (
-      <div>
-        <img src={avatar_url} alt="avatar" />
+      <div id="sidebar" className="light-color">
+        <img src={avatar_url} alt="avatar" id="sidebar-avatar" />
         <h1>{login}</h1>
-        <h2>{type}</h2>
-        <h3>Id: {id}</h3>
-        <h3>Score: {score}</h3>
+        <h3>{type}</h3>
+        <h4>Id: {id}</h4>
+        <h4>Score: {score}</h4>
       </div>
     );
   }

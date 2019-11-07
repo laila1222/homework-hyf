@@ -13,6 +13,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/">
+
             <UserSearch />
 
           </Route>

@@ -4,7 +4,7 @@ class MenuItem extends React.Component {
   render() {
     return (
       <button
-        className="item"
+        className="item light-color"
         onClick={this.props.onClick}
         name={this.props.name}
       >

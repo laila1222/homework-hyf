@@ -2,14 +2,17 @@ import React from 'react';
 import Repos from './Repos';
 import Followers from './Followers';
 import Organizations from './Organizations';
+import Loader from '../Loader';
 
 class ActiveMenu extends React.Component {
   state = {
     data: [],
     url: 'initial',
+    isLoading: true
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({ isLoading: true})
     const changeUrl = new Promise(() => {
       setTimeout(() => {
         this.setState({url: this.props.url});
@@ -22,28 +25,33 @@ class ActiveMenu extends React.Component {
           fetch(this.state.url)
             .then(res => res.json())
             .then(data => this.setState({data}));
+            this.setState({ isLoading: false })
         } else {
           console.log('error in fetching data');
         }
       }, 2000);
     });
 
-    Promise.resolve(changeUrl);
-    Promise.resolve(fetchData);
+    await Promise.resolve(changeUrl);
+    await Promise.resolve(fetchData);
+    
   }
 
   render() {
+    console.log(this.state.isLoading);
     console.log(this.state.url);
     console.log(this.state.data);
     return (
-      <div>
-        <h2>{this.props.activeMenuName}</h2>
+      <div className="light-color">
+       
+        <h2 id="active-menu-name">{this.props.activeMenuName}</h2>
+        {this.state.isLoading && <Loader />}
         <ul>
           {this.props.activeMenuName === 'Repositories' &&
             this.state.data.map(repo => (
               <Repos
                 key={repo.id}
-                url={repo.url}
+                html_url={repo.html_url}
                 name={repo.name}
                 description={repo.description}
               />
@@ -54,14 +62,20 @@ class ActiveMenu extends React.Component {
             </p>
           )}
           {this.props.activeMenuName === 'Followers' &&
-            this.state.data.map(follower => (
+            <React.Fragment>
+            <div className="ui four column grid ">
+            {this.state.data.map(follower => (
+              
               <Followers
                 key={follower.id}
                 url={follower.url}
                 avatar_url={follower.avatar_url}
                 login={follower.login}
               />
+             
             ))}
+            </div>
+            </React.Fragment>}
           {this.props.activeMenuName === 'Organizations' &&
             this.state.data.map(org => (
               <Organizations

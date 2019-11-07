@@ -3,11 +3,13 @@ import MenuItem from './MenuItem';
 import './UserProfile.css';
 import ActiveMenu from './ActiveMenu';
 
+
 class MainSide extends React.Component {
   state = {
     activeItem: 'Repositories',
     url: '',
     activeMenuName: 'Repositories',
+ 
   };
 
   handleMenuClick = event => {
@@ -26,15 +28,14 @@ class MainSide extends React.Component {
 
       case 'Organizations':
         this.setState({url: organizations_url});
+        console.log('orga')
         break;
 
       case 'Followers':
         this.setState({url: followers_url});
         break;
 
-      case 'Following':
-        this.setState({url: following_url});
-        break;
+  
 
       default:
         this.setState({url: repos_url});
@@ -48,13 +49,13 @@ class MainSide extends React.Component {
   render() {
     return (
       <div id="mainside-container">
-        <div className="ui five item menu">
+        <div id="menu-container" className="light-color">
           <MenuItem name="Repositories" onClick={this.handleMenuClick} />
           <MenuItem name="Organizations" onClick={this.handleMenuClick} />
           <MenuItem name="Followers" onClick={this.handleMenuClick} />
-          <MenuItem name="Following" onClick={this.handleMenuClick} />
+          
         </div>
-        <div>
+        <div id="data-container">
           {this.state.activeItem === 'Repositories' && (
             <ActiveMenu
               activeMenuName={this.state.activeItem}
@@ -73,12 +74,7 @@ class MainSide extends React.Component {
               url={this.props.followers_url}
             />
           )}
-          {this.state.activeItem === 'Following' && (
-            <ActiveMenu
-              activeMenuName={this.state.activeItem}
-              url={this.props.following_url}
-            />
-          )}
+          
         </div>
       </div>
     );
