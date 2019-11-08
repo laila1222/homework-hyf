@@ -32,7 +32,7 @@ class UserProfile extends React.Component {
     return (
       <React.Fragment>
         <Header />
-        <div id="main-container">
+        <div id="main-container" className="custom-container row">
           <Sidebar
             avatar_url={avatar_url}
             login={login}
@@ -48,7 +48,7 @@ class UserProfile extends React.Component {
             starred_url={starred_url}
           />
         </div>
-      </React.Fragment>
+        </React.Fragment>
     );
   }
 }
