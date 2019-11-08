@@ -64,7 +64,7 @@ class UserSearch extends React.Component {
             <div className="to-center">
             {/* {({ language }) => <h1>Language is  {language}</h1>} */}
               
-              <form onSubmit={this.handleFormSubmit} className="ui search">
+              <form onSubmit={this.handleFormSubmit} className="ui search" id="main-search-form">
                 <div className="ui icon input">
                   <input
                     className="prompt"

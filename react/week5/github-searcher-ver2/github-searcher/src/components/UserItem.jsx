@@ -12,7 +12,9 @@ class UserItem extends React.Component {
         <div className="column card-padding">
           <div className="ui fluid card" >
             <div className="image">
+              <Link to={path} >
               <img alt="avatar" src={avatar_url} id="avatar"/>
+              </Link>
             </div>
             <div className="content">
                 <Link to={path} >

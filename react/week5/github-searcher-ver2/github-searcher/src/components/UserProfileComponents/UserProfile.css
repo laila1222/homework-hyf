@@ -1,5 +1,8 @@
 
-
+#logo {
+    color: white;
+    display: inline;
+}
 
 #header-search input {
     width: 30vw;
