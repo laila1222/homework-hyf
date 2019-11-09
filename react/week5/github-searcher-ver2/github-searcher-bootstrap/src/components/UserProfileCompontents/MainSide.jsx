@@ -39,7 +39,7 @@ class MainSide extends React.Component {
 
   render() {
     return (
-      <div id="mainside-container col-8">
+      <div id="mainside-container" className="w-75  p-3">
         
           <nav className="">
             <div className="d-flex justify-content-around ">

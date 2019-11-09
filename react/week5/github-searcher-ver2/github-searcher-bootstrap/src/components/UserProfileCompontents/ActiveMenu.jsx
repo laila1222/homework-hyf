@@ -42,11 +42,11 @@ class ActiveMenu extends React.Component {
     console.log(this.state.url);
     console.log(this.state.data);
     return (
-      <div className="light-color">
+      <div className="">
        
-        <h2 id="active-menu-name">{this.props.activeMenuName}</h2>
+        <h2 id="active-menu-name" className="text-center">{this.props.activeMenuName}</h2>
         {this.state.isLoading && <Loader />}
-        <ul>
+        <div className="list-group">
           {this.props.activeMenuName === 'Repositories' &&
             this.state.data.map(repo => (
               <Repos
@@ -56,6 +56,7 @@ class ActiveMenu extends React.Component {
                 description={repo.description}
               />
             ))}
+          </div>
           {this.props.activeMenuName === 'Starred' && (
             <p>
               This is some weird url from the api, that doesnt work as it is.
@@ -63,7 +64,7 @@ class ActiveMenu extends React.Component {
           )}
           {this.props.activeMenuName === 'Followers' &&
             <React.Fragment>
-            <div className="ui four column grid ">
+            <div className="w-100 d-flex flex-wrap  justify-content-around">
             {this.state.data.map(follower => (
               
               <Followers
@@ -86,7 +87,7 @@ class ActiveMenu extends React.Component {
                 avatar_url={org.avatar_url}
               />
             ))}
-        </ul>
+        
       </div>
     );
   }

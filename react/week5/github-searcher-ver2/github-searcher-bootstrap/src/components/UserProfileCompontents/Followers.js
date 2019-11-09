@@ -2,23 +2,19 @@ import React from 'react';
 
 class Followers extends React.Component {
   render () {
-    console.log (this.props);
     const {login, url, avatar_url} = this.props;
     return (
-      <div className="column card-padding">
-        <div className="ui fluid card">
-          <div className="image">
-            <a href={url}>
-              <img
-                src={avatar_url}
-                alt="followers-avatar"
-                className="followers-image"
-              />
-            </a>
-          </div>
-          <div className="content">
-            <div className="header">{login}</div>
-          </div>
+      <div className="card w-25 mx-2 my-2">
+        <a href={url}>
+          <img
+            src={avatar_url}
+            alt="followers-avatar"
+            className="followers-image w-100"
+          />
+        </a>
+        <div className="card-body">
+          <h5 className="card-title">{login}</h5>
+
         </div>
       </div>
     );

@@ -5,7 +5,7 @@ class Sidebar extends React.Component {
   render() {
     const {login, avatar_url, id, score, type} = this.props;
     return (
-      <div id="sidebar" className="col-4">
+      <div id="sidebar" className="w-25">
         <div className="card">
           <img src={avatar_url} alt="avatar" id="sidebar-avatar" className="card-img-top"/>
           <div className="card-body">
