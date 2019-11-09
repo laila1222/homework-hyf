@@ -4,8 +4,6 @@ import ErrorText from './ErrorText';
 import UserItem from './UserItem';
 import '../index.css';
 import './UserSearch.css';
-// import './UserSearch.css';
-import Loader from './Loader';
 import Headline from './Headline';
 
 class UserSearch extends React.Component {
@@ -34,12 +32,11 @@ class UserSearch extends React.Component {
   handleFormSubmit = event => {
     this.setState({errorText: ''});
     event.preventDefault();
-    
-      this.setState(
-        {userName: this.inputRef.current.value, isLoading: true},
-        () => this.getFetchData()
-      );
 
+    this.setState(
+      {userName: this.inputRef.current.value, isLoading: true},
+      () => this.getFetchData()
+    );
   };
 
   render() {
@@ -57,10 +54,7 @@ class UserSearch extends React.Component {
             <div className="to-center">
               <Headline />
 
-              <form
-                onSubmit={this.handleFormSubmit}
-                id="main-search-form"
-              >
+              <form onSubmit={this.handleFormSubmit} id="main-search-form">
                 <div className="form-group">
                   <input
                     className="form-control"
@@ -82,7 +76,9 @@ class UserSearch extends React.Component {
                       <span class="sr-only">Loading...</span>
                     </button>
                   ) : (
-                    <button className="btn btn-success" type="submit">Search</button>
+                    <button className="btn btn-success" type="submit">
+                      Search
+                    </button>
                   )}
                 </div>
               </form>
@@ -90,7 +86,6 @@ class UserSearch extends React.Component {
           </div>
 
           <div className="container">
-            
             {this.state.errorText && <ErrorText error={this.state.errorText} />}
             <div id="users-container" className="row pt-3 flex-wrap ">
               {this.state.users.map(user => (

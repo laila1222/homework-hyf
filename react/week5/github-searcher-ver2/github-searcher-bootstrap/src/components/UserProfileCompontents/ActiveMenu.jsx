@@ -45,7 +45,11 @@ class ActiveMenu extends React.Component {
       <div className="">
        
         <h2 id="active-menu-name" className="text-center">{this.props.activeMenuName}</h2>
-        {this.state.isLoading && <Loader />}
+        {this.state.isLoading && 
+        <div className="ml-auto  w-50">
+          <Loader />
+        </div>}
+         
         <div className="list-group">
           {this.props.activeMenuName === 'Repositories' &&
             this.state.data.map(repo => (
