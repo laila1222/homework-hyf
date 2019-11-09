@@ -48,7 +48,7 @@ class UserProfile extends React.Component {
             starred_url={starred_url}
           />
         </div>
-        </React.Fragment>
+      </React.Fragment>
     );
   }
 }

@@ -40,16 +40,15 @@ class MainSide extends React.Component {
   render() {
     return (
       <div id="mainside-container" className="w-75  p-3">
-        
-          <nav className="">
-            <div className="d-flex justify-content-around ">
-              <MenuItem name="Repositories" onClick={this.handleMenuClick} />
-              <MenuItem name="Organizations" onClick={this.handleMenuClick} />
-              <MenuItem name="Followers" onClick={this.handleMenuClick} />
-            </div>
-          </nav>
-          <hr id="menu-line"></hr>
-        
+        <nav className="">
+          <div className="d-flex justify-content-around ">
+            <MenuItem name="Repositories" onClick={this.handleMenuClick} />
+            <MenuItem name="Organizations" onClick={this.handleMenuClick} />
+            <MenuItem name="Followers" onClick={this.handleMenuClick} />
+          </div>
+        </nav>
+        <hr id="menu-line"></hr>
+
         <div id="data-container">
           {this.state.activeItem === 'Repositories' && (
             <ActiveMenu

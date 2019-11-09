@@ -7,7 +7,12 @@ class Sidebar extends React.Component {
     return (
       <div id="sidebar" className="w-25">
         <div className="card">
-          <img src={avatar_url} alt="avatar" id="sidebar-avatar" className="card-img-top"/>
+          <img
+            src={avatar_url}
+            alt="avatar"
+            id="sidebar-avatar"
+            className="card-img-top"
+          />
           <div className="card-body">
             <h1 className="card-title">{login}</h1>
             <p className="card-text">User type: {type}</p>
@@ -15,8 +20,6 @@ class Sidebar extends React.Component {
             <p className="card-text">Score: {score}</p>
           </div>
         </div>
-        
-        
       </div>
     );
   }

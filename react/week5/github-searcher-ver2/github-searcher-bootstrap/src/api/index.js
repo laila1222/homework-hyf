@@ -23,4 +23,4 @@ async function fetchUser (userName) {
 //    return await response.json()
 // }
 
-export { fetchUser};
+export {fetchUser};
