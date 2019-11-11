@@ -22,9 +22,9 @@ class UserItem extends React.Component {
             <h4 className="card-title">{login}</h4>
           </Link>
           <p className="card-text">Id: {id}</p>
-          <a href={url} className="card-text">
+          {/* <a href={url} className="card-text">
             Repo link
-          </a>
+          </a> */}
           <p className="card-text">
             <small className="text-muted">Type: {type}</small>
           </p>
