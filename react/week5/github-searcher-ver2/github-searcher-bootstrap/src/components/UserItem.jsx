@@ -22,6 +22,7 @@ class UserItem extends React.Component {
             <h4 className="card-title">{login}</h4>
           </Link>
           <p className="card-text">Id: {id}</p>
+<!--        Change this part to html_url??    -->
           {/* <a href={url} className="card-text">
             Repo link
           </a> */}
